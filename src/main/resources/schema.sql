@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `favorite_home`;
 CREATE TABLE `favorite_home`(
 	`user_id` BIGINT,
 	`home_id` BIGINT,
-    `registered_date` TIMESTAMP,
+    `registered_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     CONSTRAINT fk_favorite_home_home FOREIGN KEY (`home_id`) REFERENCES `home`(`id`),
     CONSTRAINT fk_favorite_home_user FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
@@ -93,7 +93,7 @@ CREATE TABLE `message` (
 );
 
 DROP TABLE IF EXISTS `message_status`;
-CREATE TABLE `message_status` (
+CREATE TABLE `message_status` (   
 	`user_id` BIGINT,
     `message_id` BIGINT,
     `is_readed` BOOLEAN,

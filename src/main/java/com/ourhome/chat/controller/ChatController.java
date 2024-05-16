@@ -44,7 +44,6 @@ public class ChatController extends TextWebSocketHandler {
 	
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-		// TODO Auto-generated method stub
 		super.handleTransportError(session, exception);
 	}
 	
