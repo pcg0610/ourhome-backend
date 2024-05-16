@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ourhome.auth.entity.User;
 import com.ourhome.auth.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/user")
+@Tag(name="user_controller", description="User_Controller")
 public class UserController {
 	
 	@Autowired
@@ -25,8 +28,8 @@ public class UserController {
 	 * @return : user가 존재하는 경우 OK(200) 코드를, 존재하지 않는다면 NO_CONTENT(204)코드 반환
 	 */
 	@GetMapping("/login")
-	public ResponseEntity<?> login(String id) {
-		User user = userService.selectUser(id);
+	public ResponseEntity<?> login(String id, String password) {
+		User user = userService.selectUser(id, password);
 		return new ResponseEntity<>(user, user != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
 	
