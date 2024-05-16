@@ -1,14 +1,13 @@
 package com.ourhome.chat.entity;
 
-public class EnteredRoom {
+import java.util.Date;
 
-	private long id;
-	
+public class EnteredRoom {
 	private long userId;
 	
 	private long roomId;
 	
-	private RoomStatus roomStatus = RoomStatus.ENTER;
+	private Date registeredDate;
 	
 	public EnteredRoom(long userId, long roomId) {
 		this.userId = userId;

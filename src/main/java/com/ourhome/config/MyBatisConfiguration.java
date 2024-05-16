@@ -8,3 +8,4 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan(basePackages="com.ourhome.**.dao")
 public class MyBatisConfiguration {
 }
+
