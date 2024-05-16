@@ -10,7 +10,6 @@ public class User {
 	private char gender;
 	private String image;
 	
-	
 	public User() {
 		
 	}
