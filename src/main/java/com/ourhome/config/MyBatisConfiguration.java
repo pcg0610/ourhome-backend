@@ -5,6 +5,5 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan()
-public class MyBatisConfiguration {
-}
+@MapperScan("com.ourhome.**.dao")
+public class MyBatisConfiguration {}
