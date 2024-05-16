@@ -7,5 +7,5 @@ public interface UserService {
 	public int insertUser(User user);
 	
 	// 로그인을 위한 사용자 조회
-	public User selectUser(String id);
+	public User selectUser(String id, String password);
 }
