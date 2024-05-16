@@ -1,7 +1,10 @@
 package com.ourhome.auth.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.ourhome.auth.entity.User;
 
+@Repository
 public interface UserDao {
 	/**
 	 * front에서 입력한 사용자 정보를 바탕으로 DB에 사용자 정보를 저장
@@ -14,5 +17,5 @@ public interface UserDao {
 	// param: 사용자의 id
 	// return: 성공 시 1, 실패 시 0
 	// 사용자의 id가 db에 존재하는지 확인
-	public User selectUser(String id);
+	public User selectUser(String id, String password);
 }
