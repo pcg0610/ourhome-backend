@@ -8,4 +8,7 @@ public interface UserService {
 	
 	// 로그인을 위한 사용자 조회
 	public User selectUser(String id, String password);
+	
+	// 회원 가입 시 사용가능 여부 판단
+	public int checkUserID(String userId);
 }
