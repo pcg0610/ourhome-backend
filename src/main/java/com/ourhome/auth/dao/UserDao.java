@@ -18,4 +18,10 @@ public interface UserDao {
 	// return: 성공 시 1, 실패 시 0
 	// 사용자의 id가 db에 존재하는지 확인
 	public User selectUser(String id, String password);
+	
+	/**
+	 * @param id: 해당 id를 현재 사용중인 사용자가 있는지 확인
+	 * @return : 사용자가 있다면 1을 없다면 0 반환
+	 */
+	public int getUserID(String userId);
 }
