@@ -3,8 +3,8 @@ package com.ourhome.auth.entity;
 import java.util.Date;
 
 public class User {
-	private int id;
-	private String user_id;
+	private long id;
+	private String userId;
 	private String password;
 	private String name;
 	private Date birth;
@@ -16,7 +16,7 @@ public class User {
 	}
 
 	public User(String userId, String password, String name, Date birth, char gender, String image) {
-		this.user_id = userId;
+		this.userId = userId;
 		this.password = password;
 		this.name = name;
 		this.birth = birth;
@@ -24,16 +24,16 @@ public class User {
 		this.image = image;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
 	public String getUserId() {
-		return user_id;
+		return userId;
 	}
 
 	public void setUserId(String userId) {
-		this.user_id = userId;
+		this.userId = userId;
 	}
 
 	public String getPassword() {
@@ -78,7 +78,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + user_id + ", password=" + password + ", name=" + name + ", birth=" + birth + ", gender="
+		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", birth=" + birth + ", gender="
 				+ gender + ", image=" + image + "]";
 	}
 }
