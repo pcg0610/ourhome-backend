@@ -4,14 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ourhome.auth.dao.UserDao">
 	<!-- 회원 가입 -->
-	<insert id="insertUser" parameterType="User">
+	<insert id="insertUser">
 		INSERT INTO user (user_id, password, name, birth, gender)
-		VALUES (#{userId}, #{password}, #{name}, #{birth}, #{gender});
+		VALUES (#{userId}, #{password}, #{name}, #{birth}, #{gender})
 	</insert>
 	
 	<!-- 로그인 -->
 	<select id="selectUser" resultType="User" parameterType="String">
 		SELECT * FROM user
 		WHERE user_id = #{id} AND password = #{password}
+	</select>
+	
+	<select id="getUserID">
+		SELECT COUNT(*) FROM user
+		WHERE user_id = #{userId}
 	</select>
 </mapper>
