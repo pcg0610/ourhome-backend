@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
 	public User selectUser(String id, String password) {
 		return userDao.selectUser(id, password);
 	}
+	
+	@Override
+	public int checkUserID(String userId) {
+		return userDao.getUserID(userId);
+	}
 }
