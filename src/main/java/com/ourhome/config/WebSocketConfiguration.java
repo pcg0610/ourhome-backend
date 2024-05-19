@@ -1,26 +1,28 @@
 package com.ourhome.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import com.ourhome.chat.controller.MyWebSocketHandler;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-@EnableWebSocket
-public class WebSocketConfiguration implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
 	@Override
-	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(webSocketHandler(), "/ws").setAllowedOriginPatterns("*");
-
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		registry.addEndpoint("/ws")
+				.setAllowedOriginPatterns("*");
 	}
 
-	@Bean
-	public WebSocketHandler webSocketHandler() {
-		return new MyWebSocketHandler();
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry config) {
+//		메시지를 구독하는 요청 url -> 메시지 받을 때
+		config.enableSimpleBroker("/sub");
+		
+//		메시지를 발행하는 요청 url -> 메시지 보낼 때
+		config.setApplicationDestinationPrefixes("/pub");
 	}
 }
