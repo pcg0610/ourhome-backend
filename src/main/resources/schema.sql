@@ -14,7 +14,16 @@ CREATE TABLE `user` (
 );
 
 INSERT INTO `user` (`user_id`, `password`, `name`, `gender`) 
-VALUES ('test', '1234', 'name', 'M');
+VALUES ('test', 'D404559F602EAB6FD602AC7680DACBFAADD13630335E951F097AF3900E9DE176B6DB28512F2E000B9D04FBA5133E8B1C6E8DF59DB3A8AB9D60BE4B97CC9E81DB', 'name', 'M');
+
+DROP TABLE IF EXISTS `user_token`;
+CREATE TABLE `user_token` (
+	`user_id` VARCHAR(50),
+    `hashed_token` VARCHAR(128),
+    `expiration` TIMESTAMP,
+	`valid` TINYINT(1) CHECK (`valid` in (1, 0)),
+    CONSTRAINT `token_pk` PRIMARY KEY(`user_id`, `hashed_token`)
+);
 
 DROP TABLE IF EXISTS `home`;
 CREATE TABLE `home`(
