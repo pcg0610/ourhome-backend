@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public int insertUser(User user) {
+		String cipherText = hashUtil.getCipherText(user.getPassword());
+		user.setPassword(cipherText);
 		return userDao.insertUser(user);
 	}
 
@@ -64,6 +66,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isValidToken(String token) {
 		String cipherText = hashUtil.getCipherText(token);
+		System.out.println("userService : " + cipherText);
+		System.out.println(userDao.checkValidToken(cipherText));
 		return userDao.checkValidToken(cipherText);
 	}
 
