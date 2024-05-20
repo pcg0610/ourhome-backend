@@ -2,6 +2,9 @@ package com.ourhome.auth.entity;
 
 import java.util.Date;
 
+/*
+ * 사용자 정보를 담고 있는 Entity
+ */
 public class User {
 	private long id;
 	private String userId;
