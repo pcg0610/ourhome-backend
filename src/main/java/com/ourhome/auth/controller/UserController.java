@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ourhome.auth.entity.AuthEntity;
 import com.ourhome.auth.entity.LoginEntity;
+import com.ourhome.auth.entity.MyPageEntity;
 import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
 import com.ourhome.auth.service.UserService;
@@ -39,8 +41,6 @@ public class UserController {
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginEntity userEntity) {
-		System.out.println("Login Controller");
-		System.out.println(userEntity.getUserId() + " " + userEntity.getPassword());
 		AuthEntity authEntity = userService.selectUser(userEntity.getUserId(), userEntity.getPassword());
 		
 		// 해당 user가 존재하지 않는 경우 token이 존재 X
@@ -74,7 +74,6 @@ public class UserController {
 	 */
 	@PostMapping("/signup")
 	public ResponseEntity<?> signUp(@RequestBody User user) {
-		System.out.println(user.toString());
 		int check = userService.insertUser(user);
 		
 		return new ResponseEntity<>(check, check == 1 ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
@@ -82,9 +81,8 @@ public class UserController {
 	
 	@GetMapping("/checkID/{userId}")
 	public ResponseEntity<?> checkID(@PathVariable String userId) {
-		System.out.println(userId);
 		int count = userService.checkUserID(userId);
-		System.out.println("count : " + count);
+		
 		if (count == 0) {
 			return ResponseEntity.ok().build();
 		}
@@ -94,7 +92,6 @@ public class UserController {
 	
 	@GetMapping("/refresh")
 	public ResponseEntity<?> refresh(HttpServletRequest request) {
-		System.out.println("Refresh 요청");
 		String refreshToken = HeaderUtil.getRefreshToken(request);
 		
 		TokenEntity newAccessToken = userService.reGenerateToken(refreshToken);
@@ -103,5 +100,36 @@ public class UserController {
 		httpHeaders.add(HeaderUtil.getAuthorazationHeader(), HeaderUtil.getTokenPrefix() + newAccessToken);
 	
 		return ResponseEntity.ok().headers(httpHeaders).build();
+	}
+	
+	@GetMapping("/mypage")
+	public ResponseEntity<?> myPage(HttpServletRequest request) {
+		String accessToken = HeaderUtil.getAccessToken(request);
+		MyPageEntity userInfo = userService.myPage(accessToken);
+		
+		return new ResponseEntity<>(userInfo, userInfo != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping("/logout")
+	public ResponseEntity<?> logout(HttpServletRequest request) {
+		System.out.println("logout");
+		String accessToken = HeaderUtil.getAccessToken(request);
+		
+		userService.logOut(accessToken);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		ResponseCookie responseCookie = ResponseCookie
+				.from(HeaderUtil.getRefreshCookie(), "")
+				.domain("localhost")
+				.path("/")
+				.httpOnly(true)
+				.secure(true)
+				.maxAge(0)
+				.sameSite("None")
+				.build();
+		return ResponseEntity.noContent()
+				.headers(httpHeaders)
+				.header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+				.build();
 	}
 }
