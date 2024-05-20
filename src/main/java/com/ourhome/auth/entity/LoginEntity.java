@@ -1,24 +1,27 @@
 package com.ourhome.auth.entity;
 
+/**
+ * 로그인 정보를 받기 위한 Entity
+ */
 public class LoginEntity {
-	private String id;
+	private String userId;
 	private String password;
 	
 	public LoginEntity() {
 		
 	}
 
-	public LoginEntity(String id, String password) {
-		this.id = id;
+	public LoginEntity(String userId, String password) {
+		this.userId = userId;
 		this.password = password;
 	}
 	
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPassword() {
@@ -28,7 +31,4 @@ public class LoginEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-
 }
