@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ourhome.home.dao.HomeDao;
+import com.ourhome.home.entity.ComboboxItemDto;
 import com.ourhome.home.entity.Home;
+import com.ourhome.home.entity.SearchCondition;
 
 @Service
 public class HomeServiceImpl implements HomeService {
@@ -14,6 +16,11 @@ public class HomeServiceImpl implements HomeService {
 	
 	HomeServiceImpl(HomeDao homeDao) {
 		this.homeDao = homeDao;
+	}
+	
+	@Override
+	public List<ComboboxItemDto> getComboboxItemsByName(String content) {
+		return homeDao.findComboboxItemsByName(content);
 	}
 
 	@Override
@@ -24,6 +31,11 @@ public class HomeServiceImpl implements HomeService {
 	@Override
 	public List<Home> getFavoritesList(long userId) {
 		return homeDao.findAllByUserId(userId);
+	}
+
+	@Override
+	public List<Home> getHomeList(SearchCondition searchCondition) {
+		return homeDao.findAll(searchCondition);
 	}
 
 }
