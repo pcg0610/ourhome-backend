@@ -42,4 +42,8 @@
 		WHERE user_id = #{userId}
 	</select>
 	
+	<update id="setInvalidById">
+		UPDATE user_token SET valid = 0
+		WHERE user_id = #{userId} AND valid = 1
+	</update>
 </mapper>
