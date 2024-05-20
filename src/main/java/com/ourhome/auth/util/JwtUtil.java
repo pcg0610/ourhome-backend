@@ -23,8 +23,8 @@ public class JwtUtil {
 	@Autowired
 	private HashUtil hashUtil;
 	
-	private final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60;// 1시간
-	private final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 12; // 12시간
+	private final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 15; //15분
+	private final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 4; // 4시간
 
 	@Value("${jwt.secretkey.accesstoken}")
 	private String accessTokenSecretKey;
@@ -120,14 +120,10 @@ public class JwtUtil {
 		System.out.println("TOKEN : " + token);
 		Jws<Claims> payload = null;
 		try {
-			System.out.println("TRY");
 			payload = Jwts.parser()
 					.verifyWith(getSecretKey(type))
 					.build().parseSignedClaims(token);
-			System.err.println("TRY FIN");
 		} catch (Exception e) {
-			System.out.println("ERROR");
-			e.printStackTrace();
 			return false;
 		}
 		
