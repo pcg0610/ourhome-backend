@@ -103,7 +103,6 @@ public class JwtUtil {
 					.verifyWith(getSecretKey(type))
 					.build().parseSignedClaims(token).getPayload();
 			
-			System.out.println("payload: " + payload.get("userId").toString());
 			return payload.get("userId", String.class);
 		}
 		
@@ -117,7 +116,6 @@ public class JwtUtil {
 	 * @return : 유효한 토큰인 경우 payload를 아닌 경우에는 null을 반환
 	 */
 	public boolean isValidToken(String token, String type) {
-		System.out.println("TOKEN : " + token);
 		Jws<Claims> payload = null;
 		try {
 			payload = Jwts.parser()
