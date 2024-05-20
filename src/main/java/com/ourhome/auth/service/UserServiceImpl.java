@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ourhome.auth.dao.UserDao;
+import com.ourhome.auth.entity.AuthEntity;
 import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
 import com.ourhome.auth.util.HashUtil;
@@ -27,27 +28,64 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User selectUser(String id, String password) {
+	public AuthEntity selectUser(String userId, String password) {
 		// 비밀번호 암호화
 		String cipherText = hashUtil.getCipherText(password);
-		System.out.println("cipherText : " + cipherText);
+		
 		// id, password로 사용자 확인
-		User user = userDao.selectUser(id, password);
+		User user = userDao.selectUser(userId, cipherText);
 		
 		// 해당 사용자가 없는 경우 null
 		if (user == null) {
 			return null;
 		}
 		
-		// 사용자가 존재하는 경우
-		String accessToken = jwtUtil.generateToken(id, "AccessToken");
-		String refreshToken = jwtUtil.generateToken(id, "RefreshToken");
+		// 사용자가 존재하는 경우 accessToken & refreshToken을 발급
+		TokenEntity accessToken = jwtUtil.generateToken(userId, "AccessToken");
+		TokenEntity refreshToken = jwtUtil.generateToken(userId, "RefreshToken");
 		
-		return userDao.selectUser(id, password);
+		userDao.insertToken(accessToken);
+		userDao.insertToken(refreshToken);
+		
+		AuthEntity authEntity = new AuthEntity();
+		authEntity.setUser(user);
+		authEntity.setAccessToken(accessToken.getToken());
+		authEntity.setRefreshToken(refreshToken.getToken());
+		authEntity.setMaxAge(refreshToken.getExpiration());		
+		
+		return authEntity; // 로그인 성공 시 User 대신 token의 정보를 전달한다.
 	}
 	
 	@Override
 	public int checkUserID(String userId) {
 		return userDao.getUserID(userId);
+	}
+
+	@Override
+	public boolean isValidToken(String token) {
+		String cipherText = hashUtil.getCipherText(token);
+		return userDao.checkValidToken(cipherText);
+	}
+
+	@Override
+	public TokenEntity reGenerateToken(String refreshToken) {
+		String userId = jwtUtil.getUserId(refreshToken, "RefreshToken");
+		
+		System.out.println("id: " + userId);
+		// refreshToken을 제외한 token에 대하여 invalid하게 만든다.
+		userDao.setInvalid(userId, hashUtil.getCipherText(refreshToken));
+		
+		User user = userDao.getUserById(userId);
+		
+		System.out.println("USER : " + user);
+		
+		// 사용자가 존재한다면 새로운 AccessToken을 생성하고 DB에 저장한다.
+		if (user != null) {
+			TokenEntity newAccessToken = jwtUtil.generateToken(userId, "AccessToken");
+			userDao.insertToken(newAccessToken);
+			return newAccessToken;
+		}
+		
+		return null;
 	}
 }
