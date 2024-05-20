@@ -53,4 +53,6 @@ public interface UserDao {
 	 * @return : userId를 ID로 갖는 사용자 객체
 	 */
 	User getUserById(String userId);
+	
+	void setInvalidById(String userId);
 }
