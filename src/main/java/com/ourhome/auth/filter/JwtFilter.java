@@ -42,7 +42,6 @@ public class JwtFilter extends OncePerRequestFilter {
 			response.setHeader("Access-Control-Allow-Headers", "content-type, authorization"); // 허용되는 HTTP Header 목록
 			response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // 허용되는 리소스의 출처
 			response.setStatus(HttpStatus.OK.value());
-			System.out.println("OPTION FILTER");
 
 			return;
 		}
@@ -51,7 +50,6 @@ public class JwtFilter extends OncePerRequestFilter {
 		// 토큰을 확인해서 발급이 가능한 경우 새로운 토큰 발급
 		// 토큰이 비정상적 -> null, 기간이 만료된 경우 -> 토큰 발급 X
 		if (request.getRequestURI().contains("/user/refresh")) {
-			System.out.println("REFRESH FILTER");
 			String refreshToken = HeaderUtil.getRefreshToken(request);
 			
 			if (refreshToken != null) {
@@ -64,7 +62,6 @@ public class JwtFilter extends OncePerRequestFilter {
 					PrintWriter printWriter = response.getWriter();
 					printWriter.print(errorResponse.toString());
 					
-					System.out.println("/user/refresh");
 					return;
 				}
 			}
@@ -72,9 +69,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		// 재발급 요청이 아닌 경우 => 토큰값을 확인해서 유효한 사용자인지를 판단
 		else {
-			System.out.println("FILTER");
 			String accessToken = HeaderUtil.getAccessToken(request);
-			System.out.println("accessToken : " + accessToken);
 			// access token이 존재 X 또는 유효하지 않은 토큰 값인 경우 또는 valid값이 0인 경우에는 유효한 토큰이 X
 
 			if (accessToken == null || !jwtUtil.isValidToken(accessToken, "AccessToken") || !userService.isValidToken(accessToken)) {
