@@ -6,8 +6,11 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.ourhome.auth.entity.TokenEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -17,6 +20,8 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 	
+	@Autowired
+	private HashUtil hashUtil;
 	
 	private final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60;// 1시간
 	private final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 12; // 12시간
@@ -66,7 +71,7 @@ public class JwtUtil {
 	 * @param type : 타입에 따른 토큰 생성
 	 * @return : 생성된 토큰 문자열 반환
 	 */
-	public String generateToken(String userId, String type) {
+	public TokenEntity generateToken(String userId, String type) {
 		long issuedAt = System.currentTimeMillis();
 		long expiration = getExpiration(issuedAt, type);
 		
@@ -83,9 +88,27 @@ public class JwtUtil {
 				.signWith(getSecretKey(type))
 				.compact();
 		
-		return token;	
+		TokenEntity tokenEntity = new TokenEntity();
+		tokenEntity.setUserId(userId);
+		tokenEntity.setToken(token);
+		tokenEntity.setHashedToken(hashUtil.getCipherText(token));
+		tokenEntity.setIssuedAt(issuedAt);
+		tokenEntity.setExpiration(expiration);
+		return tokenEntity;
 	}
 	
+	public String getUserId(String token, String type) {
+		if (isValidToken(token, type)) {
+			Claims payload = Jwts.parser()
+					.verifyWith(getSecretKey(type))
+					.build().parseSignedClaims(token).getPayload();
+			
+			System.out.println("payload: " + payload.get("userId").toString());
+			return payload.get("userId", String.class);
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * token의 유효성을 검증하여 유효한 토큰인 경우 payload를 반환한다.
@@ -93,11 +116,21 @@ public class JwtUtil {
 	 * @param type : 사용할 secretKey 타입
 	 * @return : 유효한 토큰인 경우 payload를 아닌 경우에는 null을 반환
 	 */
-	public Jws<Claims> validation(String token, String type) {
-		Jws<Claims> payload = Jwts.parser()
-				.verifyWith(getSecretKey(type))
-				.build()
-				.parseSignedClaims(token); // 토큰 parsing
-		return payload;
+	public boolean isValidToken(String token, String type) {
+		System.out.println("TOKEN : " + token);
+		Jws<Claims> payload = null;
+		try {
+			System.out.println("TRY");
+			payload = Jwts.parser()
+					.verifyWith(getSecretKey(type))
+					.build().parseSignedClaims(token);
+			System.err.println("TRY FIN");
+		} catch (Exception e) {
+			System.out.println("ERROR");
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 }
