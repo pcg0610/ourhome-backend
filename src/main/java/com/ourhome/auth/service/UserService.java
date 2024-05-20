@@ -1,6 +1,7 @@
 package com.ourhome.auth.service;
 
 import com.ourhome.auth.entity.AuthEntity;
+import com.ourhome.auth.entity.MyPageEntity;
 import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
 
@@ -20,5 +21,9 @@ public interface UserService {
 	// 토큰 재생성
 	TokenEntity reGenerateToken(String refreshToken);
 	
+	// 사용자 정보 & item 목록 받아오기
+	MyPageEntity myPage(String accessToken);
 	
+	// 로그아웃
+	void logOut(String accessToken);
 }

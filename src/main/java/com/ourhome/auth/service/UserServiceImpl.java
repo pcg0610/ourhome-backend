@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ourhome.auth.dao.UserDao;
 import com.ourhome.auth.entity.AuthEntity;
+import com.ourhome.auth.entity.MyPageEntity;
 import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
 import com.ourhome.auth.util.HashUtil;
@@ -91,5 +92,32 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public MyPageEntity myPage(String accessToken) {
+		String userId = jwtUtil.getUserId(accessToken, "AccessToken");
+		User user = userDao.getUserById(userId);
+		MyPageEntity userInfo = new MyPageEntity();
+		userInfo.setName(user.getName());
+		userInfo.setBirth(user.getBirth());
+		
+		if (user.getGender() == 'M') {
+			userInfo.setGender("남성");
+		} else {
+			userInfo.setGender("여성");
+		}
+		
+		userInfo.setImg(user.getImage());
+		userInfo.setUserId(userId);
+		
+		System.out.println("USER : " + userInfo);
+		return userInfo;
+	}
+
+	@Override
+	public void logOut(String accessToken) {
+		String userId = jwtUtil.getUserId(accessToken, "AccessToken");
+		userDao.setInvalidById(userId);
 	}
 }
