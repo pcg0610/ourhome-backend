@@ -39,6 +39,7 @@ public class UserController {
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginEntity userEntity) {
+		System.out.println("Login Controller");
 		System.out.println(userEntity.getUserId() + " " + userEntity.getPassword());
 		AuthEntity authEntity = userService.selectUser(userEntity.getUserId(), userEntity.getPassword());
 		
@@ -75,6 +76,7 @@ public class UserController {
 	public ResponseEntity<?> signUp(@RequestBody User user) {
 		System.out.println(user.toString());
 		int check = userService.insertUser(user);
+		
 		return new ResponseEntity<>(check, check == 1 ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
 	}
 	
