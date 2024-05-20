@@ -1,12 +1,14 @@
 package com.ourhome.auth.filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.ourhome.auth.exception.ErrorResponse;
 import com.ourhome.auth.service.UserService;
 import com.ourhome.auth.util.HeaderUtil;
 import com.ourhome.auth.util.JwtUtil;
@@ -40,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			response.setHeader("Access-Control-Allow-Headers", "content-type, authorization"); // 허용되는 HTTP Header 목록
 			response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // 허용되는 리소스의 출처
 			response.setStatus(HttpStatus.OK.value());
-			
+			System.out.println("OPTION FILTER");
 
 			return;
 		}
@@ -49,12 +51,19 @@ public class JwtFilter extends OncePerRequestFilter {
 		// 토큰을 확인해서 발급이 가능한 경우 새로운 토큰 발급
 		// 토큰이 비정상적 -> null, 기간이 만료된 경우 -> 토큰 발급 X
 		if (request.getRequestURI().contains("/user/refresh")) {
+			System.out.println("REFRESH FILTER");
 			String refreshToken = HeaderUtil.getRefreshToken(request);
 			
 			if (refreshToken != null) {
 				// 토큰이 존재하지 않는 경우 또는 valid한 토큰이 없다면 재발급이 불가능
 				if (!jwtUtil.isValidToken(refreshToken, "RefreshToken") || !userService.isValidToken(refreshToken)) {
 					response.setStatus(HttpStatus.UNAUTHORIZED.value());
+					response.setContentType("application/json;charset=UTF-8");
+					
+					ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED.value());
+					PrintWriter printWriter = response.getWriter();
+					printWriter.print(errorResponse.toString());
+					
 					System.out.println("/user/refresh");
 					return;
 				}
@@ -63,14 +72,19 @@ public class JwtFilter extends OncePerRequestFilter {
 		
 		// 재발급 요청이 아닌 경우 => 토큰값을 확인해서 유효한 사용자인지를 판단
 		else {
+			System.out.println("FILTER");
 			String accessToken = HeaderUtil.getAccessToken(request);
 			System.out.println("accessToken : " + accessToken);
 			// access token이 존재 X 또는 유효하지 않은 토큰 값인 경우 또는 valid값이 0인 경우에는 유효한 토큰이 X
-			System.out.println(jwtUtil.isValidToken(accessToken, "AccessToken"));
+
 			if (accessToken == null || !jwtUtil.isValidToken(accessToken, "AccessToken") || !userService.isValidToken(accessToken)) {
 				response.setStatus(HttpStatus.UNAUTHORIZED.value());
 				response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-				System.out.println("else");
+				
+				ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED.value());
+				
+				PrintWriter printWriter = response.getWriter();
+				printWriter.print(errorResponse.toString());
 				return;
 			}
 			
@@ -82,8 +96,8 @@ public class JwtFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 		String[] excludeFilterList = {
-				"/user/login", "/user/signup", "/user/checkID/{userId}",
-				"swagger-ui", "api-docs", "/room/*", "/ws"
+				"/user/login", "/user/signup", "/user/checkID",
+				"swagger-ui", "api-docs", "/room/entered", "/ws"
 		};
 		
 		// true의 경우 filter의 대상이 되지 않는다.
