@@ -47,7 +47,6 @@ public class ChatRoomController {
 		}	
 	)
 	public ResponseEntity<?> getEnteredList(@RequestParam(name = "userId") long userId) {
-
 		List<ChatRoom> rooms = chatRoomService.getEnteredList(userId);
 		
 		if (rooms == null || rooms.isEmpty()) {
