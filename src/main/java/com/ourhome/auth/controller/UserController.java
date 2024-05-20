@@ -2,7 +2,9 @@ package com.ourhome.auth.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,31 +14,56 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ourhome.auth.entity.AuthEntity;
 import com.ourhome.auth.entity.LoginEntity;
+import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
 import com.ourhome.auth.service.UserService;
+import com.ourhome.auth.util.HeaderUtil;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
 @Tag(name="user_controller", description="User_Controller")
-@CrossOrigin("*")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
 	/**
-	 * 사용자가 입력한 id로 DB에 해당 사용자가 존재하는지 확인
-	 * @param id : 사용자 id
+	 * 사용자가 입력한 정보로 DB에서 사용자가 존재하는지 확인 & 토큰 발급
+	 * @param userEntity : 사용자 id
 	 * @return : user가 존재하는 경우 OK(200) 코드를, 존재하지 않는다면 NO_CONTENT(204)코드 반환
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginEntity userEntity) {
-		System.out.println(userEntity.getId() + " " + userEntity.getPassword());
-		User user = userService.selectUser(userEntity.getId(), userEntity.getPassword());
-		return new ResponseEntity<>(user, user != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
+		System.out.println(userEntity.getUserId() + " " + userEntity.getPassword());
+		AuthEntity authEntity = userService.selectUser(userEntity.getUserId(), userEntity.getPassword());
+		
+		// 해당 user가 존재하지 않는 경우 token이 존재 X
+		if (authEntity == null) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		// 생성된 token에 대하여 accesstoken의 경우 HTTP Header의 Authorization필드에 담아 전달한다.
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add(HeaderUtil.getAuthorazationHeader(), HeaderUtil.getTokenPrefix() + authEntity.getAccessToken());
+		
+		// RefreshToken의 경우에는 Cookie로 전달한다.
+		ResponseCookie cookie = ResponseCookie
+				.from(HeaderUtil.getRefreshCookie(), authEntity.getRefreshToken()) // cookie의 이름 & 값 설정
+				.domain("localhost") // 특정 도메인에서만 사용할 수 있도록 제한
+				.path("/") // 특정 servlet에만 전달
+				.httpOnly(true) // client를 통해 쿠키 탈취 방지
+				.secure(true)
+				.maxAge(authEntity.getMaxAge() / 1000) // 쿠키의 만료 기간 설정
+				.sameSite("None") // 서드파티 요청에 쿠키 전달 여부 설정 (CSRF 관련 문제 해결) ("None", "Strict", "Lax")
+				.build();
+		
+		User user = authEntity.getUser();
+		return new ResponseEntity<>(user, httpHeaders, HttpStatus.OK);
 	}
 	
 	/**
@@ -61,5 +88,18 @@ public class UserController {
 		}
 		
 		return ResponseEntity.badRequest().build();
+	}
+	
+	@GetMapping("/refresh")
+	public ResponseEntity<?> refresh(HttpServletRequest request) {
+		System.out.println("Refresh 요청");
+		String refreshToken = HeaderUtil.getRefreshToken(request);
+		
+		TokenEntity newAccessToken = userService.reGenerateToken(refreshToken);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add(HeaderUtil.getAuthorazationHeader(), HeaderUtil.getTokenPrefix() + newAccessToken);
+	
+		return ResponseEntity.ok().headers(httpHeaders).build();
 	}
 }
