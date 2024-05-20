@@ -2,15 +2,20 @@ package com.ourhome.home.controller;
 
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ourhome.home.entity.ComboboxItemDto;
 import com.ourhome.home.entity.Home;
+import com.ourhome.home.entity.SearchCondition;
 import com.ourhome.home.service.HomeService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,6 +29,40 @@ public class HomeController {
 	
 	HomeController(HomeService homeService) {
 		this.homeService = homeService;
+	}
+	
+	@GetMapping("")
+	@Operation(
+			description = "이름을 이용해 매물을 조회해서 반환하는 API",
+			method = "GET",
+			parameters = {
+					@Parameter(description = "매물 이름이 포함할 내용", name = "content")
+			},
+			responses = {
+					@ApiResponse(responseCode = "200"),
+					@ApiResponse(responseCode = "204", description = "내용을 포함하는 매물이 없습니다.")
+			})
+	public ResponseEntity<?> listComboboxItemByName(
+			@RequestParam(value = "content") String content) {
+		List<ComboboxItemDto> homeList = homeService.getComboboxItemsByName(content);
+		
+		if (homeList == null || homeList.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		return ResponseEntity.ok().body(homeList);
+	}
+	
+	@GetMapping("/list")
+	public ResponseEntity<?> list(SearchCondition searchCondition) {
+		System.out.println(searchCondition);
+		List<Home> homeList = homeService.getHomeList(searchCondition);
+		
+		if (homeList == null || homeList.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		return ResponseEntity.ok(homeList);
 	}
 
 	@GetMapping("/{homeId}")
