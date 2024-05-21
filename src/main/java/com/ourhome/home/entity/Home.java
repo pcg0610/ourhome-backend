@@ -112,5 +112,11 @@ public class Home {
 	public void setRegisteredDate(Date registeredDate) {
 		this.registeredDate = registeredDate;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Home [id=" + id + ", name=" + name + ", type=" + type + ", address=" + address + ", jeonsae=" + jeonsae
+				+ ", monthlyDeposit=" + monthlyDeposit + ", monthlyPay=" + monthlyPay + ", area=" + area + ", roomCnt="
+				+ roomCnt + ", phone=" + phone + ", registeredDate=" + registeredDate + "]";
+	}
 }
