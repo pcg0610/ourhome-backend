@@ -101,8 +101,14 @@ public class UserController {
 	public ResponseEntity<?> refresh(HttpServletRequest request) {
 		String refreshToken = HeaderUtil.getRefreshToken(request);
 		
-		TokenEntity newAccessToken = userService.reGenerateToken(refreshToken);
+		// 로그인을 하지 않은 상황에서 로그인이 필요한 page로의 이동이 필요한 경우 refreshToken은 null
+		// null 인경우 badRequest 코드를 반환
+		if (refreshToken == null) {
+			return ResponseEntity.badRequest().build();
+		}
 		
+		TokenEntity newAccessToken = userService.reGenerateToken(refreshToken);
+		System.out.println(newAccessToken);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(HeaderUtil.getAuthorazationHeader(), HeaderUtil.getTokenPrefix() + newAccessToken);
 	
