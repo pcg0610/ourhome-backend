@@ -5,8 +5,8 @@
 <mapper namespace="com.ourhome.auth.dao.UserDao">
 	<!-- 회원 가입 -->
 	<insert id="insertUser">
-		INSERT INTO user (user_id, password, name, birth, gender)
-		VALUES (#{userId}, #{password}, #{name}, #{birth}, #{gender})
+		INSERT INTO user (user_id, phone_number, password, name, birth, gender)
+		VALUES (#{userId}, #{phoneNumber}, #{password}, #{name}, #{birth}, #{gender})
 	</insert>
 	
 	<!-- 로그인 -->
@@ -46,4 +46,14 @@
 		UPDATE user_token SET valid = 0
 		WHERE user_id = #{userId} AND valid = 1
 	</update>
+	
+	<insert id="insertPersonality">
+		INSERT INTO personality (user_id, content)
+		VALUES (#{userId}, #{personality})
+	</insert>
+	
+	<select id="getPersonality" resultType="String">
+		SELECT content FROM personality
+		WHERE user_id = #{userId}
+	</select>
 </mapper>
