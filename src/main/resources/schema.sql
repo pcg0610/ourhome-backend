@@ -68,7 +68,7 @@ CREATE TABLE `favorite_home`(
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
 	`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `user_id` BIGINT,
+    `user_id` VARCHAR(50),
     `home_id` BIGINT,
     `title` VARCHAR(100) NOT NULL,
     `content` TEXT NOT NULL,
