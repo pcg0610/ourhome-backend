@@ -9,12 +9,13 @@ CREATE TABLE `user` (
     `password` varchar(128) NOT NULL,
     `name` varchar(30) NOT NULL,
     `birth` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `phone_number` varchar(30),
     `gender` char(1) CHECK (`gender` in ('M', 'F')),
     `img` blob
 );
 
-INSERT INTO `user` (`user_id`, `password`, `name`, `gender`) 
-VALUES ('test', 'D404559F602EAB6FD602AC7680DACBFAADD13630335E951F097AF3900E9DE176B6DB28512F2E000B9D04FBA5133E8B1C6E8DF59DB3A8AB9D60BE4B97CC9E81DB', 'name', 'M');
+INSERT INTO `user` (`user_id`, `phone_number`, `password`, `name`, `gender`) 
+VALUES ('test', '010-1234-1234', 'D404559F602EAB6FD602AC7680DACBFAADD13630335E951F097AF3900E9DE176B6DB28512F2E000B9D04FBA5133E8B1C6E8DF59DB3A8AB9D60BE4B97CC9E81DB', 'name', 'M');
 
 DROP TABLE IF EXISTS `user_token`;
 CREATE TABLE `user_token` (
@@ -23,6 +24,13 @@ CREATE TABLE `user_token` (
     `expiration` TIMESTAMP,
 	`valid` TINYINT(1) CHECK (`valid` in (1, 0)),
     CONSTRAINT `token_pk` PRIMARY KEY(`user_id`, `hashed_token`)
+);
+
+DROP TABLE IF EXISTS `personality`;
+CREATE TABLE `personality` (
+	`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `user_id` varchar(50) NOT NULL,
+    `content` varchar(30)
 );
 
 DROP TABLE IF EXISTS `home`;

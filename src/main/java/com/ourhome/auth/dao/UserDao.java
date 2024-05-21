@@ -1,9 +1,12 @@
 package com.ourhome.auth.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
+import com.ourhome.home.entity.Home;
 
 @Repository
 public interface UserDao {
@@ -55,4 +58,13 @@ public interface UserDao {
 	User getUserById(String userId);
 	
 	void setInvalidById(String userId);
+	
+	int insertPersonality(String personality, String userId);
+	
+	/*
+	 * 사용자의 ID로 사용자가 입력한 개인 정보 리스트를 얻어온다.
+	 * @param userId : 사용자 ID
+	 * @return : 개인 정보 리스트
+	 */
+	List<String> getPersonality(String userId);
 }

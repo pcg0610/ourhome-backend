@@ -28,7 +28,7 @@ public class Home {
 	private String lat;
 	
 	private Date registeredDate;
-
+	
 	public long getId() {
 		return id;
 	}
@@ -133,4 +133,11 @@ public class Home {
 		this.registeredDate = registeredDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Home [id=" + id + ", name=" + name + ", type=" + type + ", address=" + address + ", buildYear="
+				+ buildYear + ", jeonsae=" + jeonsae + ", monthlyDeposit=" + monthlyDeposit + ", monthlyPay="
+				+ monthlyPay + ", area=" + area + ", phone=" + phone + ", lng=" + lng + ", lat=" + lat
+				+ ", registeredDate=" + registeredDate + "]";
+	}
 }

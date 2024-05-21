@@ -92,7 +92,7 @@ public class JwtFilter extends OncePerRequestFilter {
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 		String[] excludeFilterList = {
 				"/user/login", "/user/signup", "/user/checkID",
-				"swagger-ui", "api-docs", "/room/entered", "/ws"
+				"swagger-ui", "api-docs", "/room/entered", "/ws", "/home"
 		};
 		
 		// true의 경우 filter의 대상이 되지 않는다.

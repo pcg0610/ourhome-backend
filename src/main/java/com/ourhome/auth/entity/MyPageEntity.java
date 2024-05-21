@@ -3,11 +3,15 @@ package com.ourhome.auth.entity;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * user 정보를 조회할 수 있는 마이 페이지를 위한 객체
+ */
 public class MyPageEntity {
 	private String name;
 	private String userId;
 	private String gender;
 	private Date birth;
+	private String phoneNumber;
 	
 	private String img;
 	private List<String> items;
@@ -16,11 +20,15 @@ public class MyPageEntity {
 		
 	}
 
-	public MyPageEntity(String name, String userId, String gender, Date birth, String img, List<String> items) {
+	
+	
+	public MyPageEntity(String name, String userId, String gender, Date birth, String phoneNumber, String img,
+			List<String> items) {
 		this.name = name;
 		this.userId = userId;
 		this.gender = gender;
 		this.birth = birth;
+		this.phoneNumber = phoneNumber;
 		this.img = img;
 		this.items = items;
 	}
@@ -57,6 +65,14 @@ public class MyPageEntity {
 		this.birth = birth;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public String getImg() {
 		return img;
 	}
@@ -76,6 +92,6 @@ public class MyPageEntity {
 	@Override
 	public String toString() {
 		return "MyPageEntity [name=" + name + ", userId=" + userId + ", gender=" + gender + ", birth=" + birth
-				+ ", img=" + img + ", items=" + items + "]";
+				+ ", phoneNumber=" + phoneNumber + ", img=" + img + ", items=" + items + "]";
 	}
 }

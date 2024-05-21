@@ -1,9 +1,12 @@
 package com.ourhome.auth.service;
 
+import java.util.List;
+
 import com.ourhome.auth.entity.AuthEntity;
 import com.ourhome.auth.entity.MyPageEntity;
 import com.ourhome.auth.entity.TokenEntity;
 import com.ourhome.auth.entity.User;
+import com.ourhome.home.entity.Home;
 
 public interface UserService {
 	// 회원가입
@@ -26,4 +29,11 @@ public interface UserService {
 	
 	// 로그아웃
 	void logOut(String accessToken);
+	
+	// 회원가입 시 입력한 item을 DB에 저장
+	void insertPersonality(List<String> personality, String userId);
+	
+	// 사용자 ID로 사용자 정보 리스트를 받아온다.
+	List<String> getPersonality(String userId);
+
 }

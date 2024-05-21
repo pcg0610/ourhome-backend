@@ -1,5 +1,7 @@
 package com.ourhome.auth.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,8 +69,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isValidToken(String token) {
 		String cipherText = hashUtil.getCipherText(token);
-		System.out.println("userService : " + cipherText);
-		System.out.println(userDao.checkValidToken(cipherText));
 		return userDao.checkValidToken(cipherText);
 	}
 
@@ -76,13 +76,10 @@ public class UserServiceImpl implements UserService {
 	public TokenEntity reGenerateToken(String refreshToken) {
 		String userId = jwtUtil.getUserId(refreshToken, "RefreshToken");
 		
-		System.out.println("id: " + userId);
 		// refreshToken을 제외한 token에 대하여 invalid하게 만든다.
 		userDao.setInvalid(userId, hashUtil.getCipherText(refreshToken));
 		
 		User user = userDao.getUserById(userId);
-		
-		System.out.println("USER : " + user);
 		
 		// 사용자가 존재한다면 새로운 AccessToken을 생성하고 DB에 저장한다.
 		if (user != null) {
@@ -99,8 +96,10 @@ public class UserServiceImpl implements UserService {
 		String userId = jwtUtil.getUserId(accessToken, "AccessToken");
 		User user = userDao.getUserById(userId);
 		MyPageEntity userInfo = new MyPageEntity();
+		
 		userInfo.setName(user.getName());
 		userInfo.setBirth(user.getBirth());
+		userInfo.setPhoneNumber(user.getPhoneNumber());
 		
 		if (user.getGender() == 'M') {
 			userInfo.setGender("남성");
@@ -111,7 +110,6 @@ public class UserServiceImpl implements UserService {
 		userInfo.setImg(user.getImage());
 		userInfo.setUserId(userId);
 		
-		System.out.println("USER : " + userInfo);
 		return userInfo;
 	}
 
@@ -119,5 +117,17 @@ public class UserServiceImpl implements UserService {
 	public void logOut(String accessToken) {
 		String userId = jwtUtil.getUserId(accessToken, "AccessToken");
 		userDao.setInvalidById(userId);
+	}
+
+	@Override
+	public void insertPersonality(List<String> personality, String userId) { 
+		for (String items : personality) {
+			userDao.insertPersonality(items, userId);
+		}
+	}
+
+	@Override
+	public List<String> getPersonality(String userId) {
+		return userDao.getPersonality(userId);
 	}
 }

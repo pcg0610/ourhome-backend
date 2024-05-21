@@ -26,7 +26,6 @@ public class HeaderUtil {
 	public static String getAccessToken(HttpServletRequest request) {
 		// Authorization Header에서 accessToken을 가져온다.
 		String authorization = request.getHeader(AUTHORIZATION);
-		System.out.println("Authorization: " + authorization);
 		
 		// accessToken에서 앞에 Bearer Token의 접두어를 제거한 후 accessToken만 반환
 		if (authorization != null && authorization.startsWith(TOKEN_PREFIX)) {

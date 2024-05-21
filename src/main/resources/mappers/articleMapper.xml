@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ourhome.article.dao.ArticleDao">
+	<!-- 게시글 추가 -->
+	<insert id="writeArticle" parameterType="ArticleEntity">
+		INSERT INTO post (user_id, home_id, title, content, registered_date)
+		VALUES (#{userId}, #{homeId}, #{title}, #{content}, #{registeredDate})
+	</insert>
+</mapper>
