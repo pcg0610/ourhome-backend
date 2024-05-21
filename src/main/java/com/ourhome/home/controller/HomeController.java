@@ -55,7 +55,6 @@ public class HomeController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<?> list(SearchCondition searchCondition) {
-		System.out.println(searchCondition);
 		List<Home> homeList = homeService.getHomeList(searchCondition);
 		
 		if (homeList == null || homeList.isEmpty()) {
@@ -70,7 +69,6 @@ public class HomeController {
 			@Parameter(description = "조회할 매물의 아이디")
 			@PathVariable(value = "homeId") long homeId) {
 		Home home = homeService.getHome(homeId);
-		
 		return ResponseEntity.ok().body(home);
 	}
 	
@@ -88,6 +86,4 @@ public class HomeController {
 		
 		return ResponseEntity.ok().body(favoritesList);
 	}
-	
-//	@GetMapping("/")
 }
