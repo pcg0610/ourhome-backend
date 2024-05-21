@@ -11,17 +11,21 @@ public class Home {
 	
 	private String address;
 	
+	private int buildYear;
+	
 	private int jeonsae;
 	
-	private int monthlyDeposit;
+	private String monthlyDeposit;
 	
-	private int monthlyPay;
+	private String monthlyPay;
 	
 	private double area;
 	
-	private int roomCnt;
-	
 	private String phone;
+	
+	private String lng;
+	
+	private String lat;
 	
 	private Date registeredDate;
 
@@ -57,6 +61,14 @@ public class Home {
 		this.address = address;
 	}
 
+	public int getBuildYear() {
+		return buildYear;
+	}
+
+	public void setBuildYear(int buildYear) {
+		this.buildYear = buildYear;
+	}
+
 	public int getJeonsae() {
 		return jeonsae;
 	}
@@ -65,19 +77,19 @@ public class Home {
 		this.jeonsae = jeonsae;
 	}
 
-	public int getMonthlyDeposit() {
+	public String getMonthlyDeposit() {
 		return monthlyDeposit;
 	}
 
-	public void setMonthlyDeposit(int monthlyDeposit) {
+	public void setMonthlyDeposit(String monthlyDeposit) {
 		this.monthlyDeposit = monthlyDeposit;
 	}
 
-	public int getMonthlyPay() {
+	public String getMonthlyPay() {
 		return monthlyPay;
 	}
 
-	public void setMonthlyPay(int monthlyPay) {
+	public void setMonthlyPay(String monthlyPay) {
 		this.monthlyPay = monthlyPay;
 	}
 
@@ -89,20 +101,28 @@ public class Home {
 		this.area = area;
 	}
 
-	public int getRoomCnt() {
-		return roomCnt;
-	}
-
-	public void setRoomCnt(int roomCnt) {
-		this.roomCnt = roomCnt;
-	}
-
 	public String getPhone() {
 		return phone;
 	}
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
 	}
 
 	public Date getRegisteredDate() {
@@ -112,5 +132,5 @@ public class Home {
 	public void setRegisteredDate(Date registeredDate) {
 		this.registeredDate = registeredDate;
 	}
-	
+
 }

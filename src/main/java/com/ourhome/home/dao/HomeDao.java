@@ -48,11 +48,13 @@ public interface HomeDao {
 	@Results(id = "homeResultMap", value = {
 			@Result(property = "id", column = "id"),
 			@Result(property = "name", column = "name"),
+			@Result(property = "address", column = "address"),
+			@Result(property = "buildYear", column = "build_year"),
 			@Result(property = "type", column = "type"),
+			@Result(property = "jeonsae", column = "jeonsae"),
 			@Result(property = "monthlyDeposit", column = "monthly_deposit"),
 			@Result(property = "monthlyPay", column = "monthly_pay"),
 			@Result(property = "area", column = "area"),
-			@Result(property = "roomCnt", column = "room_cnt"),
 			@Result(property = "phone", column = "phone"),
 			@Result(property = "registeredDate", column = "registered_date")
 	})

@@ -7,6 +7,56 @@ public class SearchCondition {
 	private String name;
 	
 	private MatchType matchType = MatchType.AND;
+	
+	private double minLat;
+	
+	private double minLng;
+	
+	private double maxLat;
+	
+	private double maxLng;
+	
+	public double getMinLat() {
+		return minLat;
+	}
+
+	public void setMinLat(double minLat) {
+		this.minLat = minLat;
+	}
+
+	public double getMinLng() {
+		return minLng;
+	}
+
+	public void setMinLng(double minLng) {
+		this.minLng = minLng;
+	}
+
+	public double getMaxLat() {
+		return maxLat;
+	}
+
+	public void setMaxLat(double maxLat) {
+		this.maxLat = maxLat;
+	}
+
+	public double getMaxLng() {
+		return maxLng;
+	}
+
+	public void setMaxLng(double maxLng) {
+		this.maxLng = maxLng;
+	}
+
+	private int limit;
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
 
 	public String getAddress() {
 		return address;
@@ -38,7 +88,9 @@ public class SearchCondition {
 
 	@Override
 	public String toString() {
-		return "SearchCondition [address=" + address + ", name=" + name + ", matchType=" + matchType + "]";
+		return "SearchCondition [address=" + address + ", name=" + name + ", matchType=" + matchType + ", minLat="
+				+ minLat + ", minLng=" + minLng + ", maxLat=" + maxLat + ", maxLng=" + maxLng + ", limit=" + limit
+				+ "]";
 	}
 	
 }
