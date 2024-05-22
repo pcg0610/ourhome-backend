@@ -1,5 +1,7 @@
 package com.ourhome.article.service;
 
+import java.util.List;
+
 import com.ourhome.article.entity.ArticleEntity;
 
 public interface ArticleService {
@@ -9,4 +11,8 @@ public interface ArticleService {
 	 * @return : 1 성공, 0 실패
 	 */
 	int writeArticle(ArticleEntity article);
+	
+	List<ArticleEntity> getArticleListByHome(long homeId);
+	
+	List<ArticleEntity> getArticleListById(long userId);
 }
