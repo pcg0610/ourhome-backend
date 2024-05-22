@@ -59,14 +59,20 @@ public interface UserDao {
 	
 	void setInvalidById(String userId);
 	
-	int insertPersonality(String personality, String userId);
+	/**
+	 * 사용자가 회원가입 시 입력한 정보를 DB에 저장한다.
+	 * @param personality : 사용자가 입력한 해시태그 정보
+	 * @param userId : 사용자 식별 ID
+	 * @return 1 : DB추가 성공 0 : DB 추가 실패
+	 */
+	int insertPersonality(String personality, long userId);
 	
 	/*
 	 * 사용자의 ID로 사용자가 입력한 개인 정보 리스트를 얻어온다.
 	 * @param userId : 사용자 ID
 	 * @return : 개인 정보 리스트
 	 */
-	List<String> getPersonality(String userId);
+	//List<String> getPersonality(String userId);
 	
 	/*
 	 * user key값에 대응되는 string type의 아이디를 얻어온다.
@@ -74,4 +80,18 @@ public interface UserDao {
 	 * @return : 사용자가 회원가입 시 입력한 ID
 	 */
 	String getUserName(long userId);
+	
+	/**
+	 * 사용자가 회원가입 시 입력했던 개인 정보 item들을 리스트로 얻어온다.
+	 * @param userId : 사용자 식별을 위한 기본 ID
+	 * @return : 사용자가 입력한 정보들이 담겨있는 리스트
+	 */
+	List<String> getItemList(long userId);
+	
+	/**
+	 * 사용자 닉네임 -> 식별용 ID
+	 * @param userId
+	 * @return 사용자 식별용 기본 ID
+	 */
+	long getId(String userId);
 }
