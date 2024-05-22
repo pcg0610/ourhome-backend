@@ -7,6 +7,7 @@ import java.util.List;
  * user 정보를 조회할 수 있는 마이 페이지를 위한 객체
  */
 public class MyPageEntity {
+	private long id;
 	private String name;
 	private String userId;
 	private String gender;
@@ -20,10 +21,9 @@ public class MyPageEntity {
 		
 	}
 
-	
-	
-	public MyPageEntity(String name, String userId, String gender, Date birth, String phoneNumber, String img,
+	public MyPageEntity(long id, String name, String userId, String gender, Date birth, String phoneNumber, String img,
 			List<String> items) {
+		this.id = id;
 		this.name = name;
 		this.userId = userId;
 		this.gender = gender;
@@ -33,6 +33,13 @@ public class MyPageEntity {
 		this.items = items;
 	}
 
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -91,7 +98,7 @@ public class MyPageEntity {
 
 	@Override
 	public String toString() {
-		return "MyPageEntity [name=" + name + ", userId=" + userId + ", gender=" + gender + ", birth=" + birth
-				+ ", phoneNumber=" + phoneNumber + ", img=" + img + ", items=" + items + "]";
+		return "MyPageEntity [id=" + id + ", name=" + name + ", userId=" + userId + ", gender=" + gender + ", birth="
+				+ birth + ", phoneNumber=" + phoneNumber + ", img=" + img + ", items=" + items + "]";
 	}
 }

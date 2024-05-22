@@ -11,4 +11,5 @@ public interface ArticleDao {
 	int writeArticle(ArticleEntity article);
 	List<ArticleEntity> getArticleListByHome(long homeId);
 	List<ArticleEntity> getArticleListById(long userId);
+	int removeArticle(ArticleEntity article);
 }

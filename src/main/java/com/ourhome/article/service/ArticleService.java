@@ -15,4 +15,6 @@ public interface ArticleService {
 	List<ArticleEntity> getArticleListByHome(long homeId);
 	
 	List<ArticleEntity> getArticleListById(long userId);
+	
+	boolean removeArticle(ArticleEntity article);
 }

@@ -2,9 +2,12 @@ package com.ourhome.auth.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 
@@ -78,9 +81,12 @@ public class UserController {
 	public ResponseEntity<?> signUp(@RequestBody User user) {
 		int check = userService.insertUser(user);
 		
+		// 사용자 식별 고유 id값 load
+		long id = userService.getId(user.getUserId());
+		
 		// 회원가입 성공
 		if (check == 1) {
-			userService.insertPersonality(user.getPersonality(), user.getUserId());
+			userService.insertPersonality(user.getPersonality(), id);
 			return new ResponseEntity<>(check, HttpStatus.CREATED);
 		}
 		
@@ -120,7 +126,7 @@ public class UserController {
 		String accessToken = HeaderUtil.getAccessToken(request);
 		MyPageEntity userInfo = userService.myPage(accessToken);
 		
-		userInfo.setItems(userService.getPersonality(userInfo.getUserId()));
+		userInfo.setItems(userService.getItemList(userInfo.getId()));
 		
 		return new ResponseEntity<>(userInfo, userInfo != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
@@ -153,5 +159,11 @@ public class UserController {
 		String name = userService.getUserName(userId);
 		
 		return new ResponseEntity<> (name, name != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/items")
+	public ResponseEntity<?> getItemList(@RequestParam long userId) {
+		List<String> itemList = userService.getItemList(userId);
+		return new ResponseEntity<> (itemList, itemList != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
 }

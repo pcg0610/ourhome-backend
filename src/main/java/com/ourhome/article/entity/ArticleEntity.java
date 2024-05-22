@@ -3,6 +3,7 @@ package com.ourhome.article.entity;
 import java.util.Date;
 
 public class ArticleEntity {
+	private long id;
 	private long userId;
 	private long homeId;
 	private String title;
@@ -13,7 +14,8 @@ public class ArticleEntity {
 		
 	}
 
-	public ArticleEntity(long userId, long homeId, String title, String content, Date registeredDate) {
+	public ArticleEntity(long id, long userId, long homeId, String title, String content, Date registeredDate) {
+		this.id = id;
 		this.userId = userId;
 		this.homeId = homeId;
 		this.title = title;
@@ -21,6 +23,14 @@ public class ArticleEntity {
 		this.registeredDate = registeredDate;
 	}
 
+	public long getId() {
+		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public long getUserId() {
 		return userId;
 	}
@@ -63,7 +73,7 @@ public class ArticleEntity {
 
 	@Override
 	public String toString() {
-		return "ArticleEntity [userId=" + userId + ", homeId=" + homeId + ", title=" + title + ", content=" + content
-				+ ", registeredDate=" + registeredDate + "]";
+		return "ArticleEntity [id=" + id + ", userId=" + userId + ", homeId=" + homeId + ", title=" + title
+				+ ", content=" + content + ", registeredDate=" + registeredDate + "]";
 	}
 }

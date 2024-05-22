@@ -31,11 +31,14 @@ public interface UserService {
 	void logOut(String accessToken);
 	
 	// 회원가입 시 입력한 item을 DB에 저장
-	void insertPersonality(List<String> personality, String userId);
+	void insertPersonality(List<String> personality, long userId);
 	
-	// 사용자 ID로 사용자 정보 리스트를 받아온다.
-	List<String> getPersonality(String userId);
-	
+	// 사용자 식별 ID로 사용자의 닉네임을 얻어온다
 	String getUserName(long userId);
-
+	
+	// 사용자 식별 ID로 사용자 해시태그 리스트를 얻어온다.
+	List<String> getItemList(long userId);
+	
+	// 사용자 닉네임으로 사용자 식별 고유 ID를 가져온다.
+	long getId(String userId);
 }
