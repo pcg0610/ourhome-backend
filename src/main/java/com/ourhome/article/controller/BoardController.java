@@ -61,12 +61,19 @@ public class BoardController {
 	@GetMapping("/id/list")
 	public ResponseEntity<?> getArticleListById(@RequestParam long userId) {
 		List<ArticleEntity> articleList = articleService.getArticleListById(userId);
+		System.out.println(articleList);
 		return new ResponseEntity<> (articleList, articleList != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
 	}
 	
 	@DeleteMapping("/remove")
-	public ResponseEntity<?> removeArticle() {
-		return null;
+	public ResponseEntity<?> removeArticle(@RequestBody ArticleEntity article) {
+		boolean check = articleService.removeArticle(article);
+		System.out.println(check);
+		if (check) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		return ResponseEntity.badRequest().build();
 	}
 	
 	@GetMapping("/{id}")
