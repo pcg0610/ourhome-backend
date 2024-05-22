@@ -27,6 +27,16 @@ public class Home {
 	
 	private String lat;
 	
+	private boolean isFavorite;
+	
+	public boolean isFavorite() {
+		return isFavorite;
+	}
+
+	public void setFavorite(boolean isFavorite) {
+		this.isFavorite = isFavorite;
+	}
+
 	private Date registeredDate;
 	
 	public long getId() {

@@ -77,7 +77,7 @@ public class HomeController {
 			@ApiResponse(responseCode = "200", description = "사용자가 즐겨찾기한 매물 리스트입니다."),
 			@ApiResponse(responseCode = "204", description = "즐겨찾기한 매물이 없습니다!")
 	})
-	public ResponseEntity<?> favoritesList(@RequestBody long userId) {
+	public ResponseEntity<?> favoritesList(@RequestParam long userId) {
 		List<Home> favoritesList = homeService.getFavoritesList(userId);
 		
 		if (favoritesList == null || favoritesList.isEmpty()) {

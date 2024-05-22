@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.type.JdbcType;
 
 import com.ourhome.home.entity.ComboboxItemDto;
 import com.ourhome.home.entity.Home;
@@ -37,11 +39,12 @@ public interface HomeDao {
 	 * @param userId 사용자 아이디
 	 * @return
 	 */
-	@Select("SELECT h.id, h.address, h.type, h.jeonsae, h.monthly_deposit, h.monthly_pay, h.area, h.room_cnt, h.phone, h.registered_date "
+	@Select("SELECT h.*, IF(fh.registered_date IS NULL, FALSE, TRUE) AS is_favorite "
 			+ "FROM home h "
 			+ "JOIN favorite_home fh "
 			+ "ON h.id = fh.home_id "
 			+ "WHERE fh.user_id = ${userId}")
+	@ResultMap("homeResultMap")
 	List<Home> findAllByUserId(long userId);
 	
 	@SelectProvider(type = HomeSqlProvider.class, method = "selectHomes")
@@ -56,7 +59,8 @@ public interface HomeDao {
 			@Result(property = "monthlyPay", column = "monthly_pay"),
 			@Result(property = "area", column = "area"),
 			@Result(property = "phone", column = "phone"),
-			@Result(property = "registeredDate", column = "registered_date")
+			@Result(property = "registeredDate", column = "registered_date"),
+			@Result(property = "isFavorite", column = "is_favorite", javaType = Boolean.class)
 	})
 	List<Home> findAll(SearchCondition searchCondition);
 }
