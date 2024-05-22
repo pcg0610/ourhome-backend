@@ -29,4 +29,15 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.getArticleListById(userId);
 	}
 
+	@Override
+	public boolean removeArticle(ArticleEntity article) {
+		int check = articleDao.removeArticle(article);
+		
+		if (check > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+
 }
