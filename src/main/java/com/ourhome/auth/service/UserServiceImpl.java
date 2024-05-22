@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.getUserById(userId);
 		MyPageEntity userInfo = new MyPageEntity();
 		
+		userInfo.setId(user.getId());
 		userInfo.setName(user.getName());
 		userInfo.setBirth(user.getBirth());
 		userInfo.setPhoneNumber(user.getPhoneNumber());
@@ -120,19 +121,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void insertPersonality(List<String> personality, String userId) { 
+	public void insertPersonality(List<String> personality, long userId) { 
 		for (String items : personality) {
 			userDao.insertPersonality(items, userId);
 		}
 	}
-
+	/*
 	@Override
 	public List<String> getPersonality(String userId) {
 		return userDao.getPersonality(userId);
-	}
+	}*/
 
 	@Override
 	public String getUserName(long userId) {
 		return userDao.getUserName(userId);
+	}
+
+	@Override
+	public List<String> getItemList(long userId) {
+		return userDao.getItemList(userId);
+	}
+
+	@Override
+	public long getId(String userId) {
+		return userDao.getId(userId);
 	}
 }
