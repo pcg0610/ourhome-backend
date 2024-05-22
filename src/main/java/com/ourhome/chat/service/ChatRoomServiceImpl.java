@@ -32,7 +32,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	@Override
 	@Transactional
 	public boolean enter(EnterRequestDto enterRequestDto) {
-		ChatRoom chatRoom = chatRoomDao.selectByPostId(enterRequestDto.getPostId());
+		ChatRoom chatRoom = chatRoomDao.selectByPostIdAndUserId(enterRequestDto.getPostId(), enterRequestDto.getPostAuthorId());
 		
 		return chatRoomDao.insertEnteredChatRoom(chatRoom.getId(), enterRequestDto.getUserId());
 	}
