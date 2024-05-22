@@ -2,6 +2,8 @@ package com.ourhome.home.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -63,4 +65,10 @@ public interface HomeDao {
 			@Result(property = "isFavorite", column = "is_favorite", javaType = Boolean.class)
 	})
 	List<Home> findAll(SearchCondition searchCondition);
+	
+	@Insert("INSERT INTO favorite_home (user_id, home_id) values (${userId}, ${homeId})")
+	int insertFavoriteItem(long userId, long homeId);
+	
+	@Delete("DELETE FROM favorite_home WHERE user_id = ${userId} AND home_id = ${homeId}")
+	int deleteFavoriteItem(long userId, long homeId);
 }
