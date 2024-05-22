@@ -130,4 +130,9 @@ public class UserServiceImpl implements UserService {
 	public List<String> getPersonality(String userId) {
 		return userDao.getPersonality(userId);
 	}
+
+	@Override
+	public String getUserName(long userId) {
+		return userDao.getUserName(userId);
+	}
 }

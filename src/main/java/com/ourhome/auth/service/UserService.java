@@ -35,5 +35,7 @@ public interface UserService {
 	
 	// 사용자 ID로 사용자 정보 리스트를 받아온다.
 	List<String> getPersonality(String userId);
+	
+	String getUserName(long userId);
 
 }
