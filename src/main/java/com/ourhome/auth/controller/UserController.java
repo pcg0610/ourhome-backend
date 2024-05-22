@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourhome.auth.entity.AuthEntity;
@@ -108,7 +109,6 @@ public class UserController {
 		}
 		
 		TokenEntity newAccessToken = userService.reGenerateToken(refreshToken);
-		System.out.println(newAccessToken);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add(HeaderUtil.getAuthorazationHeader(), HeaderUtil.getTokenPrefix() + newAccessToken);
 	
@@ -146,5 +146,12 @@ public class UserController {
 				.headers(httpHeaders)
 				.header(HttpHeaders.SET_COOKIE, responseCookie.toString())
 				.build();
+	}
+	
+	@GetMapping("/name")
+	public ResponseEntity<?> getUserName(@RequestParam long userId) {
+		String name = userService.getUserName(userId);
+		
+		return new ResponseEntity<> (name, name != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
 }
