@@ -73,6 +73,7 @@ public class ChatRoomController {
 		)
 	)
 	public void createChatRoom(@org.springframework.web.bind.annotation.RequestBody CreateRequestDto requestDto) {
+		System.out.println(requestDto);
 		chatRoomService.save(requestDto);
 	}
 	

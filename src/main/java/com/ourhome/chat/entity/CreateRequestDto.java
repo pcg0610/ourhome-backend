@@ -1,16 +1,16 @@
 package com.ourhome.chat.entity;
 
 public class CreateRequestDto {
-	private long homeId;
+	private long postId;
 	
 	private String name;
 
-	public long getHomeId() {
-		return homeId;
+	public long getPostId() {
+		return postId;
 	}
 
-	public void setHomeId(long homeId) {
-		this.homeId = homeId;
+	public void setPostId(long postId) {
+		this.postId = postId;
 	}
 
 	public String getName() {
@@ -23,7 +23,7 @@ public class CreateRequestDto {
 
 	@Override
 	public String toString() {
-		return "CreateRequestDto [homeId=" + homeId + ", name=" + name + "]";
+		return "CreateRequestDto [postId=" + postId + ", name=" + name + "]";
 	}
 
 }
