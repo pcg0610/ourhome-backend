@@ -5,7 +5,17 @@
 <mapper namespace="com.ourhome.article.dao.ArticleDao">
 	<!-- 게시글 추가 -->
 	<insert id="writeArticle" parameterType="ArticleEntity">
-		INSERT INTO post (user_id, home_id, title, content, registered_date)
-		VALUES (#{userId}, #{homeId}, #{title}, #{content}, #{registeredDate})
+		INSERT INTO post (user_id, home_id, title, content)
+		VALUES (#{userId}, #{homeId}, #{title}, #{content})
 	</insert>
+	
+	<!-- home ID와 일치하는 게시글을 불러온다. -->
+	<select id="getArticleListByHome">
+		SELECT * FROM post WHERE home_id = #{homeId}
+	</select>
+	
+	<!-- user ID와 일치하는 게시글 목록을 불러온다. -->
+	<select id="getArticleListById">
+		SELECt * FROM post WHERE user_id = #{userId}
+	</select>
 </mapper>
