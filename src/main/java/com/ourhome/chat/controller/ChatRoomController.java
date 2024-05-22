@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ourhome.chat.entity.ChatRoom;
 import com.ourhome.chat.entity.CreateRequestDto;
+import com.ourhome.chat.entity.EnterRequestDto;
 import com.ourhome.chat.service.ChatRoomService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,8 +73,19 @@ public class ChatRoomController {
 		)
 	)
 	public void createChatRoom(@org.springframework.web.bind.annotation.RequestBody CreateRequestDto requestDto) {
-		System.out.println(requestDto);
 		chatRoomService.save(requestDto);
+	}
+	
+	@PostMapping("/enter")
+	public ResponseEntity<?> enterChatRoom(@org.springframework.web.bind.annotation.RequestBody EnterRequestDto enterRequestDto) {
+		System.out.println(enterRequestDto);
+		boolean enter = chatRoomService.enter(enterRequestDto);
+		
+		if (!enter) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/{roomId}/message")

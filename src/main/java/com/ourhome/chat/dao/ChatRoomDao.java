@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.ourhome.chat.entity.ChatRoom;
 import com.ourhome.chat.entity.CreateRequestDto;
+import com.ourhome.chat.entity.EnterRequestDto;
 
 @Mapper
 public interface ChatRoomDao {
@@ -34,4 +35,10 @@ public interface ChatRoomDao {
 
 	@Delete("DELETE FROM chat_room WHERE id = #{id}")
 	void deleteById(long id);
+	
+	@Select("SELECT id, home_id AS homeId, name FROM chat_room WHERE home_id = #{postId}")
+	ChatRoom selectByPostId(long postId);
+	
+	@Insert("INSERT INTO entered_chat_room (user_id, chat_room_id) VALUE (#{userId}, #{chatRoomId})")
+	boolean insertEnteredChatRoom(long chatRoomId, long userId);
 }

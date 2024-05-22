@@ -3,10 +3,12 @@ package com.ourhome.chat.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ourhome.chat.dao.ChatRoomDao;
 import com.ourhome.chat.entity.ChatRoom;
 import com.ourhome.chat.entity.CreateRequestDto;
+import com.ourhome.chat.entity.EnterRequestDto;
 
 @Service
 public class ChatRoomServiceImpl implements ChatRoomService {
@@ -25,6 +27,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	@Override
 	public List<ChatRoom> getEnteredList(long userId) {
 		return chatRoomDao.selectEnteredChatRoomByUserId(userId);
+	}
+
+	@Override
+	@Transactional
+	public boolean enter(EnterRequestDto enterRequestDto) {
+		ChatRoom chatRoom = chatRoomDao.selectByPostId(enterRequestDto.getPostId());
+		
+		return chatRoomDao.insertEnteredChatRoom(chatRoom.getId(), enterRequestDto.getUserId());
 	}
 
 	// @Override

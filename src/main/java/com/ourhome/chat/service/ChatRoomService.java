@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ourhome.chat.entity.ChatRoom;
 import com.ourhome.chat.entity.CreateRequestDto;
+import com.ourhome.chat.entity.EnterRequestDto;
 
 public interface ChatRoomService {
 	 List<ChatRoom> getEnteredList(long userId);
@@ -11,4 +12,6 @@ public interface ChatRoomService {
 	// List<Message> getMessageList(long roomId);
 
 	void save(CreateRequestDto chatRoom);
+	
+	boolean enter(EnterRequestDto enterRequestDto);
 }
