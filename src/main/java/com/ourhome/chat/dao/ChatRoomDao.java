@@ -30,7 +30,6 @@ public interface ChatRoomDao {
 	 		+ "JOIN entered_chat_room er "
 	 		+ "ON r.id = er.chat_room_id "
 	 		+ "WHERE er.user_id = #{userId}")
-	@ResultMap("chatRoomMap")
 	List<ChatRoom> selectEnteredChatRoomByUserId(long userId);
 
 	// @Select("SELECT * "
