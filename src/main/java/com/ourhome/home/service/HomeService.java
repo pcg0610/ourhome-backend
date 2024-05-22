@@ -15,4 +15,8 @@ public interface HomeService {
 	Home getHome(long homeId);
 
 	List<Home> getFavoritesList(long userId);
+	
+	int insertFavoriteItem(long userId, long homeId);
+	
+	int deleteFavoriteItem(long userId, long homeId);
 }

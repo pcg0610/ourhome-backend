@@ -38,4 +38,14 @@ public class HomeServiceImpl implements HomeService {
 		return homeDao.findAll(searchCondition);
 	}
 
+	@Override
+	public int insertFavoriteItem(long userId, long homeId) {
+		return homeDao.insertFavoriteItem(userId, homeId);
+	}
+
+	@Override
+	public int deleteFavoriteItem(long userId, long homeId) {
+		return homeDao.deleteFavoriteItem(userId, homeId);
+	}
+
 }
