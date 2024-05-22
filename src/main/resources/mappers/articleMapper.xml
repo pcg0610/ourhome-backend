@@ -18,4 +18,9 @@
 	<select id="getArticleListById">
 		SELECt * FROM post WHERE user_id = #{userId}
 	</select>
+	
+	<!-- article ID와 userID가 일치하는 게시글을 삭제한다. -->
+	<delete id="removeArticle">
+		DELETE FROM post WHERE id = #{id}
+	</delete>
 </mapper>
