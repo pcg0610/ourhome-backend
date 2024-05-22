@@ -3,21 +3,25 @@ package com.ourhome.home.controller;
 import java.util.List;
 
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourhome.home.entity.ComboboxItemDto;
+import com.ourhome.home.entity.FavoriteEntity;
 import com.ourhome.home.entity.Home;
 import com.ourhome.home.entity.SearchCondition;
 import com.ourhome.home.service.HomeService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
@@ -79,11 +83,30 @@ public class HomeController {
 	})
 	public ResponseEntity<?> favoritesList(@RequestParam long userId) {
 		List<Home> favoritesList = homeService.getFavoritesList(userId);
-		
+
 		if (favoritesList == null || favoritesList.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
 		
 		return ResponseEntity.ok().body(favoritesList);
+	}
+	
+	@PostMapping("/insert")
+	public ResponseEntity<?> insertFavoriteItem(@RequestBody FavoriteEntity favorite) {
+		int check = homeService.insertFavoriteItem(favorite.getUserId(), favorite.getHomeId());
+		
+		return new ResponseEntity<> (check, check == 1 ? HttpStatus.CREATED : HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteFavoriteItem(@RequestBody FavoriteEntity favorite) {
+		int check = homeService.deleteFavoriteItem(favorite.getUserId(), favorite.getHomeId());
+		
+		if (check == 1) {
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.badRequest().build();
+		
 	}
 }
