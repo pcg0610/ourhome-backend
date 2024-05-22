@@ -30,6 +30,11 @@ public class JwtFilter extends OncePerRequestFilter {
 	
 	@Autowired
 	private UserService userService;
+	
+	public JwtFilter(JwtUtil jwtUtil, UserService userService) {
+		this.jwtUtil = jwtUtil;
+		this.userService = userService;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
