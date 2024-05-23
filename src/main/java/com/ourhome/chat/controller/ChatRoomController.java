@@ -2,6 +2,7 @@ package com.ourhome.chat.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ourhome.chat.entity.ChatRoom;
 import com.ourhome.chat.entity.CreateRequestDto;
 import com.ourhome.chat.entity.EnterRequestDto;
+import com.ourhome.chat.entity.PostEntity;
 import com.ourhome.chat.service.ChatRoomService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,7 +75,7 @@ public class ChatRoomController {
 		)
 	)
 	public void createChatRoom(@org.springframework.web.bind.annotation.RequestBody CreateRequestDto requestDto) {
-		System.out.println(requestDto);
+		System.out.println("create : " + requestDto);
 		chatRoomService.save(requestDto);
 	}
 	
@@ -87,5 +89,13 @@ public class ChatRoomController {
 		}
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/article")
+	public ResponseEntity<?> getPostId(@RequestParam long userId, @RequestParam long homeId) {
+		System.out.println(userId + " " + homeId);
+		
+		long postId = chatRoomService.getPostId(userId, homeId);
+		return new ResponseEntity<> (postId, postId > 0 ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
 	}
 }
