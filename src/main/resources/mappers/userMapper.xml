@@ -51,13 +51,7 @@
 		INSERT INTO personality (user_id, content)
 		VALUES (#{userId}, #{personality})
 	</insert>
-	
-	<!--
-	<select id="getPersonality" resultType="String">
-		SELECT content FROM personality
-		WHERE user_id = #{userId}
-	</select>-->
-	
+
 	<select id="getUserName" resultType="String">
 		SELECT user_id FROM user
 		WHERE id = #{userId}
