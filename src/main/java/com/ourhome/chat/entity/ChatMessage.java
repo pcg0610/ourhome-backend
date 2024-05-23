@@ -1,8 +1,11 @@
 package com.ourhome.chat.entity;
 
 public class ChatMessage {
+	
     private String content;
+    
     private String sender;
+    
     private MessageType type;
 
     public enum MessageType {

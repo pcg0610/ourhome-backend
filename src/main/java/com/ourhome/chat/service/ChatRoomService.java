@@ -7,9 +7,7 @@ import com.ourhome.chat.entity.CreateRequestDto;
 import com.ourhome.chat.entity.EnterRequestDto;
 
 public interface ChatRoomService {
-	 List<ChatRoom> getEnteredList(long userId);
-
-	// List<Message> getMessageList(long roomId);
+	List<ChatRoom> getEnteredList(long userId);
 
 	void save(CreateRequestDto chatRoom);
 	

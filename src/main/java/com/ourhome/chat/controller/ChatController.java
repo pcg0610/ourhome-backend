@@ -15,11 +15,4 @@ public class ChatController {
     public ChatMessage sendMessage(ChatMessage chatMessage) {
         return chatMessage;
     }
-
-    // @MessageMapping("/chat.addUser")
-    // @SendTo("/sub/public")
-    // public ChatMessage addUser(ChatMessage chatMessage, SimpMessageHeaderAccessor simpMessageHeaderAccessor) {
-    //     simpMessageHeaderAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-    //     return chatMessage;
-    // }
 }
