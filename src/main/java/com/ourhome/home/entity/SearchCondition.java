@@ -8,6 +8,16 @@ public class SearchCondition {
 	
 	private MatchType matchType = MatchType.AND;
 	
+	private long userId;
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	private double minLat;
 	
 	private double minLng;

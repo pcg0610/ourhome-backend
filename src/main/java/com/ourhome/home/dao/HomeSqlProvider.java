@@ -8,9 +8,17 @@ public class HomeSqlProvider {
 
 	public String selectHomes(SearchCondition searchCondition) {
 		return new SQL() {{
-			SELECT("h.*, IF(fh.registered_date IS NULL, FALSE, TRUE) AS is_favorite");
+			if (searchCondition.getUserId() == 0) { 
+				SELECT ("h.*, false AS is_favorite");
+			} else {
+				SELECT("h.*, IF(fh.registered_date IS NULL, FALSE, TRUE) AS is_favorite");				
+			}
 			FROM("home h");
-			LEFT_OUTER_JOIN("favorite_home fh ON h.id = fh.home_id");
+			
+			if (searchCondition.getUserId() != 0) {
+				LEFT_OUTER_JOIN("favorite_home fh ON h.id = fh.home_id");
+				LEFT_OUTER_JOIN("user u ON fh.user_id = u.id");
+			}
 			
 			StringBuilder whereClause = new StringBuilder();
 			
