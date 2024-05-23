@@ -133,7 +133,6 @@ public class UserController {
 	
 	@DeleteMapping("/logout")
 	public ResponseEntity<?> logout(HttpServletRequest request) {
-		System.out.println("logout");
 		String accessToken = HeaderUtil.getAccessToken(request);
 		
 		userService.logOut(accessToken);
