@@ -36,4 +36,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		
 		return chatRoomDao.insertEnteredChatRoom(chatRoom.getId(), enterRequestDto.getUserId());
 	}
+
+	@Override
+	public long getPostId(long userId, long homeId) {
+		return chatRoomDao.getPostId(userId, homeId);
+	}
 }

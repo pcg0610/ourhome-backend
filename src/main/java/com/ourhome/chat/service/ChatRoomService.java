@@ -12,4 +12,6 @@ public interface ChatRoomService {
 	void save(CreateRequestDto chatRoom);
 	
 	boolean enter(EnterRequestDto enterRequestDto);
+	
+	long getPostId(long userId, long homeId);
 }
