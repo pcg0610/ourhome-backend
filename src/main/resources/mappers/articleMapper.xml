@@ -23,4 +23,10 @@
 	<delete id="removeArticle">
 		DELETE FROM post WHERE id = #{id}
 	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateArticle">
+		UPDATE post SET title = #{title}, content = #{content}, registered_date = #{registeredDate}
+		WHERE user_id = #{userId} AND home_id = #{homeId} AND id = #{id}
+	</update>
 </mapper>
