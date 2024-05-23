@@ -32,12 +32,7 @@ public interface ChatRoomDao {
 	 		+ "WHERE er.user_id = #{userId}")
 	List<ChatRoom> selectEnteredChatRoomByUserId(long userId);
 
-	// @Select("SELECT * "
-	// 		+ "FROM message"
-	// 		+ "WHERE room_id = #{roomId}")
-	// List<Message> selectMessageByRoomId(long roomId);
-
-	@Insert("INSERT INTO chat_room (post_id, name) VALUE (#{postId}, #{name})")
+	@Insert("INSERT INTO chat_room (post_id, user_id, name) VALUE (#{postId}, #{userId}, #{name})")
 	void save(CreateRequestDto requestDto);
 
 	@Delete("DELETE FROM chat_room WHERE id = #{id}")

@@ -88,18 +88,4 @@ public class ChatRoomController {
 		
 		return ResponseEntity.ok().build();
 	}
-
-	@GetMapping("/{roomId}/message")
-	@Operation(
-		description = "채팅방의 메시지를 조회하는 API",
-		responses = {
-			@ApiResponse(responseCode = "200", description = "메시지 조회를 성공했습니다.")
-		}
-	)
-	public ResponseEntity<?> messageList(@PathVariable(value = "roomId") long roomId) {
-
-		// List<Message> room = chatRoomService.getMessageList(roomId);
-
-		return null;
-	}
 }

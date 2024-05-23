@@ -3,6 +3,7 @@ package com.ourhome.chat.entity;
 import java.util.Date;
 
 public class ChatRoom {
+	
 	private long id;
 
 	private long postId;
