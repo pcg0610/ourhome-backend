@@ -68,13 +68,6 @@ public interface UserDao {
 	int insertPersonality(String personality, long userId);
 	
 	/*
-	 * 사용자의 ID로 사용자가 입력한 개인 정보 리스트를 얻어온다.
-	 * @param userId : 사용자 ID
-	 * @return : 개인 정보 리스트
-	 */
-	//List<String> getPersonality(String userId);
-	
-	/*
 	 * user key값에 대응되는 string type의 아이디를 얻어온다.
 	 * @param userId: 사용자 식별을 위한 기본 ID
 	 * @return : 사용자가 회원가입 시 입력한 ID
