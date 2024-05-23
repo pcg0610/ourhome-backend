@@ -40,4 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return false;
 	}
 
+	@Override
+	public int updateArticle(ArticleEntity article) {
+		return articleDao.updateArticle(article);
+	}
+
 }

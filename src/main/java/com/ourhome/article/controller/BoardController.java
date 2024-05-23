@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,14 +42,11 @@ public class BoardController {
 		return new ResponseEntity<>(check, check == 1 ? HttpStatus.CREATED : HttpStatus.NO_CONTENT);
 	}
 	
-	@PostMapping("/update")
-	@Operation(
-			description = "게시글 수정",
-			responses = {
-				@ApiResponse(responseCode = "200", description = "게시글 수정 성공"),
-				@ApiResponse(responseCode = "400", description = "수정 실패")			})
-	public ResponseEntity<?> updateArticle() {
-		return null;
+	@PutMapping("/update")
+	public ResponseEntity<?> updateArticle(@RequestBody ArticleEntity article) {
+		int check = articleService.updateArticle(article);
+		
+		return new ResponseEntity<>(check, check > 0 ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST);
 	}
 	
 	// 각 집에 대하여 사람들이 남긴 게시글을 조회
