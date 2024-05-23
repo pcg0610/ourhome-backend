@@ -71,7 +71,7 @@ public class JwtUtil {
 	 * @param type : 타입에 따른 토큰 생성
 	 * @return : 생성된 토큰 문자열 반환
 	 */
-	public TokenEntity generateToken(String userId, String type) {
+	public TokenEntity generateToken(long id, String userId, String type) {
 		long issuedAt = System.currentTimeMillis();
 		long expiration = getExpiration(issuedAt, type);
 		
@@ -89,6 +89,7 @@ public class JwtUtil {
 				.compact();
 		
 		TokenEntity tokenEntity = new TokenEntity();
+		tokenEntity.setId(id);
 		tokenEntity.setUserId(userId);
 		tokenEntity.setToken(token);
 		tokenEntity.setHashedToken(hashUtil.getCipherText(token));
