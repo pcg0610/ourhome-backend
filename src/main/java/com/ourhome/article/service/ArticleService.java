@@ -17,4 +17,6 @@ public interface ArticleService {
 	List<ArticleEntity> getArticleListById(long userId);
 	
 	boolean removeArticle(ArticleEntity article);
+	
+	int updateArticle(ArticleEntity article);
 }
