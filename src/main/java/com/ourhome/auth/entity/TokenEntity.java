@@ -10,6 +10,7 @@ import java.util.Date;
  * userId를 기반으로 token을 생성한다.
  */
 public class TokenEntity {
+	private long id;
 	private String userId;
 	private String token;
 	private String hashedToken;
@@ -20,11 +21,20 @@ public class TokenEntity {
 		
 	}
 	
-	public TokenEntity(String userId, String token, long issuedAt, long expiration) {
+	public TokenEntity(long id, String userId, String token, long issuedAt, long expiration) {
+		this.id = id;
 		this.userId = userId;
 		this.token = token;
 		this.issuedAt = issuedAt;
 		this.expiration = expiration;
+	}
+	
+	public long getId() {
+		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getUserId() {
@@ -71,10 +81,10 @@ public class TokenEntity {
 	public void setHashedToken(String hashedToken) {
 		this.hashedToken = hashedToken;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Token [userId=" + userId + ", token=" + token + ", issuedAt=" + issuedAt + ", expiration=" + expiration
-				+ "]";
+		return "TokenEntity [id=" + id + ", userId=" + userId + ", token=" + token + ", hashedToken=" + hashedToken
+				+ ", issuedAt=" + issuedAt + ", expiration=" + expiration + "]";
 	}
 }
