@@ -126,11 +126,6 @@ public class UserServiceImpl implements UserService {
 			userDao.insertPersonality(items, userId);
 		}
 	}
-	/*
-	@Override
-	public List<String> getPersonality(String userId) {
-		return userDao.getPersonality(userId);
-	}*/
 
 	@Override
 	public String getUserName(long userId) {
