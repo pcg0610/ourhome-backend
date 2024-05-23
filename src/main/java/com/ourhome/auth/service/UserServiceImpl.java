@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		// 사용자가 존재하는 경우 accessToken & refreshToken을 발급
-		TokenEntity accessToken = jwtUtil.generateToken(userId, "AccessToken");
-		TokenEntity refreshToken = jwtUtil.generateToken(userId, "RefreshToken");
+		TokenEntity accessToken = jwtUtil.generateToken(user.getId() ,userId, "AccessToken");
+		TokenEntity refreshToken = jwtUtil.generateToken(user.getId(), userId, "RefreshToken");
 		
 		userDao.insertToken(accessToken);
 		userDao.insertToken(refreshToken);
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 		
 		// 사용자가 존재한다면 새로운 AccessToken을 생성하고 DB에 저장한다.
 		if (user != null) {
-			TokenEntity newAccessToken = jwtUtil.generateToken(userId, "AccessToken");
+			TokenEntity newAccessToken = jwtUtil.generateToken(user.getId(), userId, "AccessToken");
 			userDao.insertToken(newAccessToken);
 			return newAccessToken;
 		}
