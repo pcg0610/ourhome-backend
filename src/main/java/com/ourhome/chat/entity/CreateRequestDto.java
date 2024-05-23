@@ -34,7 +34,8 @@ public class CreateRequestDto {
 
 	@Override
 	public String toString() {
-		return "CreateRequestDto [postId=" + postId + ", name=" + name + "]";
+		return "CreateRequestDto [postId=" + postId + ", userId=" + userId + ", name=" + name + ", getPostId()="
+				+ getPostId() + ", getUserId()=" + getUserId() + ", getName()=" + getName() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-
 }
