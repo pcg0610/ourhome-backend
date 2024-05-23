@@ -40,4 +40,7 @@ public interface ChatRoomDao {
 	
 	@Insert("INSERT INTO entered_chat_room (user_id, chat_room_id) VALUE (#{userId}, #{chatRoomId})")
 	boolean insertEnteredChatRoom(long chatRoomId, long userId);
+	
+	@Select("SELECT id FROM post WHERE user_id = #{userId} AND home_id = #{homeId}")
+	long getPostId(long userId, long homeId);
 }
