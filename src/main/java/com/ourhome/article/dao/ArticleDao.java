@@ -12,4 +12,5 @@ public interface ArticleDao {
 	List<ArticleEntity> getArticleListByHome(long homeId);
 	List<ArticleEntity> getArticleListById(long userId);
 	int removeArticle(ArticleEntity article);
+	int updateArticle(ArticleEntity article);
 }
