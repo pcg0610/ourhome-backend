@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 
@@ -32,7 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @Tag(name="user_controller", description="User_Controller")
 public class UserController {
 	
@@ -163,6 +162,9 @@ public class UserController {
 	@GetMapping("/items")
 	public ResponseEntity<?> getItemList(@RequestParam long userId) {
 		List<String> itemList = userService.getItemList(userId);
-		return new ResponseEntity<> (itemList, itemList != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(itemList, itemList != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
+	
+	@GetMapping("/{userId}/favorites")
+	
 }

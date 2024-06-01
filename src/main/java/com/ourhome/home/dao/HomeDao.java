@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.type.JdbcType;
 
 import com.ourhome.home.entity.ComboboxItemDto;
 import com.ourhome.home.entity.Home;
@@ -25,7 +24,7 @@ public interface HomeDao {
 	 */
 	@Select("SELECT name FROM home WHERE name LIKE CONCAT('%', #{content}, '%') LIMIT 5")
 	List<ComboboxItemDto> findComboboxItemsByName(String content);
-	
+
 	/**
 	 * 아이디를 이용해 하나의 집을 가져오는 메서드
 	 * @param homeId 집 아이디
@@ -33,7 +32,7 @@ public interface HomeDao {
 	 */
 	@Select("SELECT * "
 			+ "FROM home "
-			+ "WHERE id=${homeId}")
+			+ "WHERE id=#{homeId}")
 	Home findOne(long homeId);
 
 	/**
@@ -45,10 +44,10 @@ public interface HomeDao {
 			+ "FROM home h "
 			+ "JOIN favorite_home fh "
 			+ "ON h.id = fh.home_id "
-			+ "WHERE fh.user_id = ${userId}")
+			+ "WHERE fh.user_id = #{userId}")
 	@ResultMap("homeResultMap")
 	List<Home> findAllByUserId(long userId);
-	
+
 	@SelectProvider(type = HomeSqlProvider.class, method = "selectHomes")
 	@Results(id = "homeResultMap", value = {
 			@Result(property = "id", column = "id"),
@@ -65,10 +64,16 @@ public interface HomeDao {
 			@Result(property = "isFavorite", column = "is_favorite", javaType = Boolean.class)
 	})
 	List<Home> findAll(SearchCondition searchCondition);
-	
-	@Insert("INSERT INTO favorite_home (user_id, home_id) values (${userId}, ${homeId})")
+
+	/**
+	 * 즐겨찾기 테이블에 새로운 행을 추가하는 메서드
+	 * @param userId
+	 * @param homeId
+	 * @return
+	 */
+	@Insert("INSERT INTO favorite_home (user_id, home_id) values (#{userId}, #{homeId})")
 	int insertFavoriteItem(long userId, long homeId);
-	
-	@Delete("DELETE FROM favorite_home WHERE user_id = ${userId} AND home_id = ${homeId}")
+
+	@Delete("DELETE FROM favorite_home WHERE user_id = #{userId} AND home_id = #{homeId}")
 	int deleteFavoriteItem(long userId, long homeId);
 }

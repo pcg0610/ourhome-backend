@@ -1,71 +1,30 @@
 package com.ourhome.home.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
+
 public class SearchCondition {
-	
-	private String address;
-	
+
+	@Schema(description = "매물 이름으로 조회하기 위한 변수")
+	@Size(max = 30, message = "이름의 길이는 최대 30자 입니다.")
 	private String name;
-	
-	private MatchType matchType = MatchType.AND;
-	
-	private long userId;
-	
-	public long getUserId() {
-		return userId;
-	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+	@Schema(description = "주소지로 조회하기 위한 변수", example = "서울")
+	@Size(max = 30, message = "주소지의 길이는 최대 30자 입니다.")
+	private String address;
 
-	private double minLat;
-	
-	private double minLng;
-	
-	private double maxLat;
-	
-	private double maxLng;
-	
-	public double getMinLat() {
-		return minLat;
-	}
-
-	public void setMinLat(double minLat) {
-		this.minLat = minLat;
-	}
-
-	public double getMinLng() {
-		return minLng;
-	}
-
-	public void setMinLng(double minLng) {
-		this.minLng = minLng;
-	}
-
-	public double getMaxLat() {
-		return maxLat;
-	}
-
-	public void setMaxLat(double maxLat) {
-		this.maxLat = maxLat;
-	}
-
-	public double getMaxLng() {
-		return maxLng;
-	}
-
-	public void setMaxLng(double maxLng) {
-		this.maxLng = maxLng;
-	}
-
+	@Schema(description = "조회할 매물 개수", defaultValue = "20")
 	private int limit;
 
-	public int getLimit() {
-		return limit;
+	@Schema(description = "특정 좌표 내의 매물을 조회하기 위한 변수")
+	private Area area;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setLimit(int limit) {
-		this.limit = limit;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getAddress() {
@@ -76,31 +35,20 @@ public class SearchCondition {
 		this.address = address;
 	}
 
-	public String getName() {
-		return name;
+	public int getLimit() {
+		return limit;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 
-	public MatchType getMatchType() {
-		return matchType;
+	public Area getArea() {
+		return area;
 	}
 
-	public void setMatchType(MatchType matchType) {
-		this.matchType = matchType;
-	}
-	
-	public String getMatchTypeName() {
-		return matchType.name();
+	public void setArea(Area area) {
+		this.area = area;
 	}
 
-	@Override
-	public String toString() {
-		return "SearchCondition [address=" + address + ", name=" + name + ", matchType=" + matchType + ", minLat="
-				+ minLat + ", minLng=" + minLng + ", maxLat=" + maxLat + ", maxLng=" + maxLng + ", limit=" + limit
-				+ "]";
-	}
-	
 }
