@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ourhome.home.dao.HomeDao;
-import com.ourhome.home.entity.ComboboxItemDto;
+import com.ourhome.home.dto.HomeCreateRequestDto;
 import com.ourhome.home.entity.Home;
-import com.ourhome.home.entity.SearchCondition;
+import com.ourhome.home.util.SearchCondition;
 
 @Service
 public class HomeServiceImpl implements HomeService {
@@ -17,35 +17,25 @@ public class HomeServiceImpl implements HomeService {
 	HomeServiceImpl(HomeDao homeDao) {
 		this.homeDao = homeDao;
 	}
-	
-	@Override
-	public List<ComboboxItemDto> getComboboxItemsByName(String content) {
-		return homeDao.findComboboxItemsByName(content);
-	}
 
 	@Override
-	public Home getHome(long homeId) {
-		return homeDao.findOne(homeId);
-	}
-
-	@Override
-	public List<Home> getFavoritesList(long userId) {
-		return homeDao.findAllByUserId(userId);
+	public Home getHome(Long homeId) {
+		return homeDao.selectHomeById(homeId);
 	}
 
 	@Override
 	public List<Home> getHomeList(SearchCondition searchCondition) {
-		return homeDao.findAll(searchCondition);
+		return homeDao.selectHomeBySearchCondition(searchCondition);
 	}
 
 	@Override
-	public int insertFavoriteItem(long userId, long homeId) {
-		return homeDao.insertFavoriteItem(userId, homeId);
+	public boolean exists(Long homeId) {
+		return homeDao.selectCountById(homeId);
 	}
 
 	@Override
-	public int deleteFavoriteItem(long userId, long homeId) {
-		return homeDao.deleteFavoriteItem(userId, homeId);
+	public int addHome(HomeCreateRequestDto createRequestDto) {
+		return homeDao.insertHome(createRequestDto);
 	}
 
 }

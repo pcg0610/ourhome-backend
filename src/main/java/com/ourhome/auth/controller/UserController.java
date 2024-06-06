@@ -164,7 +164,4 @@ public class UserController {
 		List<String> itemList = userService.getItemList(userId);
 		return new ResponseEntity<>(itemList, itemList != null ? HttpStatus.OK : HttpStatus.NO_CONTENT);
 	}
-	
-	@GetMapping("/{userId}/favorites")
-	
 }

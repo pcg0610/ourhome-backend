@@ -1,37 +1,22 @@
-package com.ourhome.home.entity;
+package com.ourhome.home.dto;
 
-import java.util.Date;
-
-import com.ourhome.home.util.Coord;
 import com.ourhome.home.util.HomeType;
 
-public class Home {
+public class HomeSummaryDto {
 
-	private Long id;
-
-	private Long userId;
-	
+    private Long id;
+    
 	private String name;
-	
+
 	private HomeType type;
 	
 	private String address;
-	
-	private int buildYear;
 	
 	private int jeonsae;
 	
 	private String monthlyDeposit;
 	
 	private String monthlyPay;
-	
-	private double area;
-	
-	private String phone;
-	
-	private Coord coord;
-
-	private Date registeredDate;
 
 	public Long getId() {
 		return id;
@@ -39,14 +24,6 @@ public class Home {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public String getName() {
@@ -73,14 +50,6 @@ public class Home {
 		this.address = address;
 	}
 
-	public int getBuildYear() {
-		return buildYear;
-	}
-
-	public void setBuildYear(int buildYear) {
-		this.buildYear = buildYear;
-	}
-
 	public int getJeonsae() {
 		return jeonsae;
 	}
@@ -103,38 +72,6 @@ public class Home {
 
 	public void setMonthlyPay(String monthlyPay) {
 		this.monthlyPay = monthlyPay;
-	}
-
-	public double getArea() {
-		return area;
-	}
-
-	public void setArea(double area) {
-		this.area = area;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public Coord getCoord() {
-		return coord;
-	}
-
-	public void setCoord(Coord coord) {
-		this.coord = coord;
-	}
-
-	public Date getRegisteredDate() {
-		return registeredDate;
-	}
-
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
 	}
 
 }

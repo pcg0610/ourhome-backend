@@ -1,14 +1,14 @@
-package com.ourhome.chat.service;
+package com.ourhome.chatroom.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ourhome.chat.dao.ChatRoomDao;
-import com.ourhome.chat.entity.ChatRoom;
-import com.ourhome.chat.entity.CreateRequestDto;
-import com.ourhome.chat.entity.EnterRequestDto;
+import com.ourhome.chatroom.dao.ChatRoomDao;
+import com.ourhome.chatroom.entity.ChatRoom;
+import com.ourhome.chatroom.entity.CreateRequestDto;
+import com.ourhome.chatroom.entity.EnterRequestDto;
 
 @Service
 public class ChatRoomServiceImpl implements ChatRoomService {
