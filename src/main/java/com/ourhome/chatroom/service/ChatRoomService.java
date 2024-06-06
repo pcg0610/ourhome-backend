@@ -1,10 +1,10 @@
-package com.ourhome.chat.service;
+package com.ourhome.chatroom.service;
 
 import java.util.List;
 
-import com.ourhome.chat.entity.ChatRoom;
-import com.ourhome.chat.entity.CreateRequestDto;
-import com.ourhome.chat.entity.EnterRequestDto;
+import com.ourhome.chatroom.entity.ChatRoom;
+import com.ourhome.chatroom.entity.CreateRequestDto;
+import com.ourhome.chatroom.entity.EnterRequestDto;
 
 public interface ChatRoomService {
 	List<ChatRoom> getEnteredList(long userId);

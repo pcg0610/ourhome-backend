@@ -1,4 +1,4 @@
-package com.ourhome.chat.entity;
+package com.ourhome.chatroom.entity;
 
 import java.util.Date;
 

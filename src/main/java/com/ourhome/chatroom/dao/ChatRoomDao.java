@@ -1,4 +1,4 @@
-package com.ourhome.chat.dao;
+package com.ourhome.chatroom.dao;
 
 import java.util.Date;
 import java.util.List;
@@ -7,13 +7,11 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import com.ourhome.chat.entity.ChatRoom;
-import com.ourhome.chat.entity.CreateRequestDto;
-import com.ourhome.chat.entity.EnterRequestDto;
+import com.ourhome.chatroom.entity.ChatRoom;
+import com.ourhome.chatroom.entity.CreateRequestDto;
 
 @Mapper
 public interface ChatRoomDao {

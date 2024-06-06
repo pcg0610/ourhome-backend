@@ -1,4 +1,4 @@
-package com.ourhome.chat.entity;
+package com.ourhome.chatroom.entity;
 
 public class EnterRequestDto {
 	

@@ -1,4 +1,4 @@
-package com.ourhome.chat.controller;
+package com.ourhome.chatroom.controller;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ourhome.chat.entity.ChatRoom;
-import com.ourhome.chat.entity.CreateRequestDto;
-import com.ourhome.chat.entity.EnterRequestDto;
 import com.ourhome.chat.entity.PostEntity;
-import com.ourhome.chat.service.ChatRoomService;
+import com.ourhome.chatroom.entity.ChatRoom;
+import com.ourhome.chatroom.entity.CreateRequestDto;
+import com.ourhome.chatroom.entity.EnterRequestDto;
+import com.ourhome.chatroom.service.ChatRoomService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
