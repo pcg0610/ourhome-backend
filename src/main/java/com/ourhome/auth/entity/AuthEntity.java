@@ -1,5 +1,7 @@
 package com.ourhome.auth.entity;
 
+import com.ourhome.user.entity.User;
+
 /**
  * AccessToken, RefreshToken, MaxAge를 전달하는 클래스
  * 사용자의 생성된 토큰을 관리하기 위한 클래스
