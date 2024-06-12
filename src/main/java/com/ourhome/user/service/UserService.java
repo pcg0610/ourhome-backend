@@ -3,16 +3,19 @@ package com.ourhome.user.service;
 import com.ourhome.user.dto.UserCreateRequestDto;
 import com.ourhome.user.dto.UserUpdateRequestDto;
 import com.ourhome.user.entity.User;
+import com.ourhome.user.exception.DuplicateUsernameException;
+import com.ourhome.user.exception.UserNotFoundException;
 
 public interface UserService {
 
-    public User getUserById(Long id);
+    public void signUp(UserCreateRequestDto createUserDto) throws DuplicateUsernameException;
 
-    public int signUp(UserCreateRequestDto createUserDto);
+    public User getUserById(Long id) throws UserNotFoundException;
 
-    public int deleteUserById(Long id);
+    public void deleteAccount(Long id) throws UserNotFoundException;
 
-    public int updateUserById(Long id, UserUpdateRequestDto updateUserDto);
+    public void updateProfile(Long id, UserUpdateRequestDto updateUserDto)
+            throws UserNotFoundException;
 
-    public boolean exists(Long id);
+    public boolean exists(Long id) throws UserNotFoundException;
 }
